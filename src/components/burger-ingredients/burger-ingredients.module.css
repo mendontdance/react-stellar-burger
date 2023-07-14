@@ -1,0 +1,24 @@
+.burger-ingredients {
+    display: block;
+    max-height: 912px;
+    max-width: 600px;
+    position: relative;
+}
+
+.ingredients {
+    max-height: 756px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.ingredients::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+    background: #2f2f37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+    background-color: #8584ac;
+}

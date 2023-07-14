@@ -1,0 +1,9 @@
+.composition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.composition:last-child {
+    margin: 0;
+}

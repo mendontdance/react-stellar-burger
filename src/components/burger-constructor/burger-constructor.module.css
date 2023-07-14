@@ -1,0 +1,30 @@
+.ingredients {
+    height: 530px;
+    overflow-x: none;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.ingredients::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+    background: #2f2f37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+    background-color: #8584ac;
+}
+
+.submit {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.counter {
+    flex: 0;
+    display: flex;
+}
+
