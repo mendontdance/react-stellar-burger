@@ -4,6 +4,8 @@ import styles from './burger-component.module.css'
 import { useDrag, useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
+import { COUNT_AMOUNT_OF_INGREDIENTS_DELETE, CHANGE_INGREDIENT_ORDER } from '../../services/actions/ingredientCounterAction'
+import PropTypes from 'prop-types';
 
 export default function BurgerComponent({ data, index }) {
     const dataOfChosenIngredients = useSelector(store => store.counter.data)
@@ -23,7 +25,7 @@ export default function BurgerComponent({ data, index }) {
 
     const deleteIngredient = () => {
         dispatch({
-            type: 'COUNT_AMOUNT_OF_INGREDIENTS_DELETE',
+            type: COUNT_AMOUNT_OF_INGREDIENTS_DELETE,
             data: data,
             counter: --data.__v,
             price: data.price
@@ -36,7 +38,7 @@ export default function BurgerComponent({ data, index }) {
             if (ingredient._id === data._id) return;
             setTimeout(() => {
                 dispatch({
-                    type: 'CHANGE_INGREDIENT_ORDER',
+                    type: CHANGE_INGREDIENT_ORDER,
                     indexFrom: findIndex(ingredient),
                     indexTo: index,
                     ingredient: ingredient
@@ -52,7 +54,6 @@ export default function BurgerComponent({ data, index }) {
         >
             <DragIcon type="primary" />
             <ConstructorElement
-                key={data._id}
                 text={data.name}
                 price={data.price}
                 thumbnail={data.image_mobile}
@@ -63,6 +64,10 @@ export default function BurgerComponent({ data, index }) {
     )
 }
 
+BurgerComponent.propTypes ={
+    data: PropTypes.object, 
+    index:PropTypes.number
+}
 
 
 

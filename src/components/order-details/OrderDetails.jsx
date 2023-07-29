@@ -1,6 +1,6 @@
 import styles from './orderdetails.module.css'
 import done from '../../images/done.png'
-import React from 'react'
+import PropTypes from 'prop-types'
 
 export default function OrderDetails({number}) {
 
@@ -13,4 +13,8 @@ export default function OrderDetails({number}) {
             <p className={`text_color_inactive mt-2 text text_type_main-default`}>Дождитесь готовности на орбитальной станции</p>
         </div>
     );
+}
+
+OrderDetails.propTypes ={
+    number: PropTypes.number
 }

@@ -3,6 +3,7 @@ import styles from "./ingredient.module.css"
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import PropTypes from 'prop-types';
 
 export default function Ingredient({ id }) {
 
@@ -28,7 +29,7 @@ export default function Ingredient({ id }) {
     const [state, setState] = React.useState(false)
 
     React.useEffect(() => {
-        if (dataOfChosenIngredients.filter((v) => (ingredient.name === v.name ? v.name : null)).length > 0) {
+        if ([...dataOfChosenIngredients, bun].filter((v) => (ingredient.name === v.name ? v.name : null)).length > 0) {
             setState(true)
         } else {
             setState(false)
@@ -36,6 +37,7 @@ export default function Ingredient({ id }) {
     })
 
     const dataOfChosenIngredients = useSelector(store => store.counter.data)
+    const bun = useSelector(store => store.counter.bun)
 
     const dispatch = useDispatch();
 
@@ -53,7 +55,8 @@ export default function Ingredient({ id }) {
                 openModal()
             }} ref={dragRefFromBurgerIngredients}>
                 {state && <div className={`text text_type_digits-default ${styles['ingredient-added']}`}>
-                    {dataOfChosenIngredients.filter((v) => (ingredient.name === v.name ? v.name : null)).length
+                    {
+                        [...dataOfChosenIngredients, bun].filter((v) => (ingredient.name === v.name ? v.name : null)).length
                     }
                 </div>}
                 <img src={ingredient.image} alt="Картинка ингредиента" className='image' />
@@ -65,5 +68,9 @@ export default function Ingredient({ id }) {
             </div>
         </>
     )
+}
+
+Ingredient.propTypes ={
+    id: PropTypes.string
 }
 

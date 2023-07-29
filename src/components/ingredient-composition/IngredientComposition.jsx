@@ -1,4 +1,5 @@
 import styles from './ingredientcomposition.module.css'
+import PropTypes from 'prop-types';
 
 export default function IngredientComposition(props) {
 
@@ -13,3 +14,10 @@ export default function IngredientComposition(props) {
         </div>
     )
 }
+
+IngredientComposition.propTypes = {
+    calories: PropTypes.number,
+    fat: PropTypes.number,
+    proteins: PropTypes.number,
+    carbohydrates: PropTypes.number
+  };

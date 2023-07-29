@@ -2,6 +2,8 @@ import {
     COUNT_AMOUNT_OF_INGREDIENTS_ADD,
     COUNT_AMOUNT_OF_INGREDIENTS_DELETE,
     CHANGE_INGREDIENT_ORDER,
+    INITIAL_STATE,
+    SET_BUN
 } from '../actions/ingredientCounterAction.jsx';
 
 export const initialState = {
@@ -9,7 +11,8 @@ export const initialState = {
     counter: 0,
     sum: 0,
     order: 0,
-    currentIngredient: null
+    currentIngredient: null,
+    bun: false
 };
 
 export const ingredientCounterReducer = (state = initialState, action) => {
@@ -19,7 +22,6 @@ export const ingredientCounterReducer = (state = initialState, action) => {
                 ...state,
                 data: [...state.data, { ...action.data, order: Number(action.order) + Number(state.order) }],
                 counter: action.counter,
-                bun: action.bun,
                 sum: Number(state.sum) + Number(action.price),
                 order: state.order + action.order
             }
@@ -36,6 +38,12 @@ export const ingredientCounterReducer = (state = initialState, action) => {
                 sum: Number(state.sum) - Number(action.price)
             }
         }
+        case SET_BUN: {
+            return {
+                ...state,
+                bun: action.bun
+            }
+        }
         case CHANGE_INGREDIENT_ORDER: {
             state.data.splice(action.indexFrom, 1);
             state.data.splice(action.indexTo, 0, action.ingredient);
@@ -43,7 +51,7 @@ export const ingredientCounterReducer = (state = initialState, action) => {
                 ...state,
             }
         }
-        case "INITIAL_STATE": {
+        case INITIAL_STATE: {
             return {
                 ...initialState,
             }

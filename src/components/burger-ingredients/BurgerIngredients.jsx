@@ -7,6 +7,7 @@ import { showModalOrder } from '../../services/actions/modalAction';
 import Modal from "../modal/Modal";
 import IngredientDetails from '../ingredient-details/IngredientDetails.jsx'
 import { useInView } from 'react-intersection-observer';
+import { OPEN_INGREDIENT_MODAL_FAILED } from '../../services/actions/modalAction';
 
 
 export default function BurgerIngredients() {
@@ -25,7 +26,7 @@ export default function BurgerIngredients() {
 
     const closeModal = (state) => {
         dispatch({
-            type: 'OPEN_INGREDIENT_MODAL_FAILED',
+            type: OPEN_INGREDIENT_MODAL_FAILED,
             showModalIngredient: state,
             data: {}
         })
