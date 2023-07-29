@@ -1,3 +1,8 @@
+.burger-constructor {
+    min-width: 600px;
+    box-sizing: border-box;
+}
+
 .ingredients {
     height: 530px;
     overflow-x: none;
@@ -28,3 +33,18 @@
     display: flex;
 }
 
+.counter__number {
+    margin: 0;
+}
+
+.burger-container {
+    display: 'flex';
+    flex-direction: 'column';
+    gap: 10px;
+    min-height: 700px;
+}
+
+.chosen-ingredient {
+    margin: 0;
+    box-sizing:border-box;
+}

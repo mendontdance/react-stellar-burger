@@ -1,16 +1,14 @@
 import React from 'react'
 import styles from './modal.module.css'
-import SubmitModal from '../submit-modal/SubmitModal';
-import IngredientModal from '../ingredient-modal/IngredientModal';
 import ModalOverlay from '../modal-overlay/ModalOverlay.jsx';
+import ReactDOM from 'react-dom';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-export default function Modal(props, key) {
-
-    const filter = props.modalSubmit ? <SubmitModal {...props} /> : <IngredientModal {...props} />
+export default function Modal({onClose, children}) {
 
     const handleEscKey = React.useCallback((event) => {
         if (event.key === 'Escape') {
-            props.onClose();
+            onClose();
         }
     });
 
@@ -22,13 +20,20 @@ export default function Modal(props, key) {
         };
     }, [handleEscKey]);
 
-
     return (
-        <section className={styles.section}>
-            <div className={`${styles.modal}`} key={key}>
-                {filter}
-                <ModalOverlay onClose={props.onClose} />
-            </div>
-        </section>
+        ReactDOM.createPortal(
+            <section className={styles.section}>
+                <div className={`${styles.modal}`}>
+                    <div className={styles['button__close']}>
+                        <CloseIcon type="primary" onClick={() => {
+                            onClose();
+                        }} />
+                    </div>
+                    {children}
+                </div>
+                <ModalOverlay onClose={onClose} />
+            </section>,
+            document.getElementById('modals')
+        )
     );
 }

@@ -1,47 +1,70 @@
 import React from 'react'
 import styles from './burger-ingredients.module.css'
-import { TypeIngredient } from '../type-ingredient/TypeIngredient.jsx'
+import { IngredientList } from '../ingredient-list/IngredientList.jsx'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useSelector, useDispatch } from 'react-redux';
+import { showModalOrder } from '../../services/actions/modalAction';
+import Modal from "../modal/Modal";
+import IngredientDetails from '../ingredient-details/IngredientDetails.jsx'
+import { useInView } from 'react-intersection-observer';
 
-export default function BurgerIngredients(props) {
 
-    const [current, setCurrent] = React.useState('one');
-    const ref1 = React.useRef(null);
-    const ref2 = React.useRef(null);
-    const ref3 = React.useRef(null);
+export default function BurgerIngredients() {
 
-    // React.useEffect(() => {
-    //     ref.current.scrollIntoView();
-    // }, [current]);
+    const dispatch = useDispatch()
+    const showModal = useSelector(state => {
+        return state.modal.showModalIngredient
+    })
+
+    React.useEffect(
+        () => {
+            dispatch(showModalOrder());
+        },
+        [dispatch]
+    );
+
+    const closeModal = (state) => {
+        dispatch({
+            type: 'OPEN_INGREDIENT_MODAL_FAILED',
+            showModalIngredient: state,
+            data: {}
+        })
+    }
+
+    const { ref: refToBun, inView: bunIsVisible } = useInView();
+    const { ref: refToSauce, inView: sauceIsVisible } = useInView();
+    const { ref: refToMain, inView: mainIsVisible } = useInView();
 
     return (
         <section className={`mt-10 ${styles['burger-ingredients']}`}>
             <h2 className={`text text_type_main-large ${styles.title}`}>Соберите бургер</h2>
-            <div style={{ display: 'flex' }}>
-                <Tab value="one" active={current === 'one'} onClick={() => {
-                    ref1.current.scrollIntoView({ behavior: "smooth" })
-                    setCurrent('one');
-                }}>
+            <div className={styles['burger-ingredients__container']}>
+                <Tab value="one" active={bunIsVisible}>
                     Булки
                 </Tab>
-                <Tab value="two" active={current === 'two'} onClick={() => {
-                    ref2.current.scrollIntoView({ behavior: "smooth" })
-                    setCurrent('two')
-                }}>
+                <Tab value="two" active={sauceIsVisible && !bunIsVisible}>
                     Соусы
                 </Tab>
-                <Tab value="three" active={current === 'three'} onClick={() => {
-                    ref3.current.scrollIntoView({ behavior: "smooth" })
-                    setCurrent('three')
-                }}>
+                <Tab value="three" active={mainIsVisible || (!bunIsVisible && !sauceIsVisible)}>
                     Начинки
                 </Tab>
             </div>
             <div className={`${styles.ingredients}`}>
-                <TypeIngredient type="bun" data={props.data} ref={ref1} />
-                <TypeIngredient type="sauce" data={props.data} ref={ref2} />
-                <TypeIngredient type="main" data={props.data} ref={ref3} />
+                <IngredientList type="bun" ref={refToBun} />
+                <IngredientList type="sauce" ref={refToSauce} />
+                <IngredientList type="main" ref={refToMain} />
             </div>
+            {
+                showModal &&
+                <Modal onClose={() => { closeModal(false) }}>
+                    <IngredientDetails />
+                </Modal>
+            }
         </section>
     )
 }
+
+
+// React.useEffect(() => {
+//     ref.current.scrollIntoView();
+// }, [current]);

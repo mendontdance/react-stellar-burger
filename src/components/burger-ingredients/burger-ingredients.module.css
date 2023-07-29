@@ -22,3 +22,7 @@
 .ingredients::-webkit-scrollbar-thumb {
     background-color: #8584ac;
 }
+
+.burger-ingredients__container {
+    display: flex;
+}
