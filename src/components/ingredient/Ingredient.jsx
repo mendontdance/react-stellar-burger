@@ -4,6 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
+import { OPEN_INGREDIENT_MODAL_SUCCESS } from '../../services/actions/modalAction';
 
 export default function Ingredient({ id }) {
 
@@ -43,7 +44,7 @@ export default function Ingredient({ id }) {
 
     const openModal = () => {
         dispatch({
-            type: 'OPEN_INGREDIENT_MODAL_SUCCESS',
+            type: OPEN_INGREDIENT_MODAL_SUCCESS,
             showModalIngredient: true,
             data: { ...ingredient }
         })

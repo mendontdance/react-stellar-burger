@@ -1,6 +1,7 @@
 export const GET_DATA_FROM_SERVER_SUCCESS = 'GET_DATA_FROM_SERVER_SUCCESS';
 export const GET_DATA_FROM_SERVER_FAILED = 'GET_DATA_FROM_SERVER_FAILED';
 export const POST_DATA_TO_SERVER_SUCCESS = 'POST_DATA_TO_SERVER_SUCCESS';
+export const POST_DATA_TO_SERVER_FAILED = 'POST_DATA_TO_SERVER_FAILED'
 
 const baseUrl = 'https://norma.nomoreparties.space/api';
 
@@ -16,18 +17,17 @@ export const fetchData = () => {
         fetch(`${baseUrl}/ingredients`)
             .then(checkResponse)
             .then(res => {
-                if (res) {
-                    dispatch({
-                        type: GET_DATA_FROM_SERVER_SUCCESS,
-                        data: res.data
-                    });
-                } else {
-                    dispatch({
-                        type: GET_DATA_FROM_SERVER_FAILED,
-                    });
-                }
+                dispatch({
+                    type: GET_DATA_FROM_SERVER_SUCCESS,
+                    data: res.data
+                });
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                dispatch({
+                    type: GET_DATA_FROM_SERVER_FAILED,
+                })
+            })
     }
 }
 
@@ -47,9 +47,15 @@ export const postData = (data, callback) => {
                     postData: res,
                     postSuccess: res.success
                 })
-                if(res.success) {
+                if (res.success) {
                     callback()
                 }
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch({
+                    type: POST_DATA_TO_SERVER_FAILED,
+                })
             })
     }
 }
