@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 export const GET_DATA_FROM_SERVER_SUCCESS = 'GET_DATA_FROM_SERVER_SUCCESS';
 export const GET_DATA_FROM_SERVER_FAILED = 'GET_DATA_FROM_SERVER_FAILED';
 export const POST_DATA_TO_SERVER_SUCCESS = 'POST_DATA_TO_SERVER_SUCCESS';
-export const POST_DATA_TO_SERVER_FAILED = 'POST_DATA_TO_SERVER_FAILED'
+export const POST_DATA_TO_SERVER_FAILED = 'POST_DATA_TO_SERVER_FAILED';
 
+export const POST_EMAIL_TO_SERVER_SUCCESS = 'POST_EMAIL_TO_SERVER_SUCCESS';
+export const POST_EMAIL_TO_SERVER_FAILED = 'POST_EMAIL_TO_SERVER_FAILED';
 const baseUrl = 'https://norma.nomoreparties.space/api';
 
 function checkResponse(res) {

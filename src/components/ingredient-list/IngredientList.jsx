@@ -4,18 +4,17 @@ import styles from './ingredientlist.module.css'
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-
 export const IngredientList = React.forwardRef(
     ({ type }, ref) => {
 
         const data = useSelector(store => store.data.data)
-
         const typeOfIgredient = type === 'bun' ? "Булки" : type === "sauce" ? "Соусы" : type === "main" ? "Начинки" : null;
 
         const listOfIgredients = data.map(ingredient => {
             if (type === ingredient.type) {
                 return (
-                    <Ingredient key={ingredient._id} id={ingredient._id} />
+
+                        <Ingredient key={ingredient._id} id={ingredient._id} />
                 )
             }
         });
@@ -31,6 +30,6 @@ export const IngredientList = React.forwardRef(
     }
 )
 
-IngredientList.propTypes ={
+IngredientList.propTypes = {
     type: PropTypes.string
 }

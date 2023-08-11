@@ -6,14 +6,7 @@
   color: #f2f2f3;
 }
 
-.main {
+.section {
   display: flex;
-  justify-content: space-between;
-}
-
-@media screen and (max-width: 1220px) {
-  .main {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  justify-content: center;
 }

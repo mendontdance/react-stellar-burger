@@ -13,9 +13,6 @@ import { OPEN_INGREDIENT_MODAL_FAILED } from '../../services/actions/modalAction
 export default function BurgerIngredients() {
 
     const dispatch = useDispatch()
-    const showModal = useSelector(state => {
-        return state.modal.showModalIngredient
-    })
 
     React.useEffect(
         () => {
@@ -23,14 +20,6 @@ export default function BurgerIngredients() {
         },
         [dispatch]
     );
-
-    const closeModal = (state) => {
-        dispatch({
-            type: OPEN_INGREDIENT_MODAL_FAILED,
-            showModalIngredient: state,
-            data: {}
-        })
-    }
 
     const { ref: refToBun, inView: bunIsVisible } = useInView();
     const { ref: refToSauce, inView: sauceIsVisible } = useInView();
@@ -50,17 +39,14 @@ export default function BurgerIngredients() {
                     Начинки
                 </Tab>
             </div>
-            <div className={`${styles.ingredients}`}>
+            <div className={`${styles.ingredients}`} onScroll={() => {
+                const a = document.querySelector('.ingredients')
+                console.log(a.scrollTop);
+            }}>
                 <IngredientList type="bun" ref={refToBun} />
                 <IngredientList type="sauce" ref={refToSauce} />
                 <IngredientList type="main" ref={refToMain} />
             </div>
-            {
-                showModal &&
-                <Modal onClose={() => { closeModal(false) }}>
-                    <IngredientDetails />
-                </Modal>
-            }
         </section>
     )
 }

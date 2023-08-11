@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { OPEN_INGREDIENT_MODAL_SUCCESS } from '../../services/actions/modalAction';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Ingredient({ id }) {
 
@@ -13,6 +14,7 @@ export default function Ingredient({ id }) {
             return elem._id === id
         })
     })
+    const location = useLocation();
 
     const [, dragRefFromBurgerIngredients] = useDrag({
         type: 'drag from burger-ingredients',
@@ -52,26 +54,34 @@ export default function Ingredient({ id }) {
 
     return (
         <>
-            <div className={`mt-8 ${styles.ingredient}`} onClick={() => {
-                openModal()
-            }} ref={dragRefFromBurgerIngredients}>
-                {state && <div className={`text text_type_digits-default ${styles['ingredient-added']}`}>
-                    {
-                        [...dataOfChosenIngredients, bun].filter((v) => (ingredient.name === v.name ? v.name : null)).length
-                    }
-                </div>}
-                <img src={ingredient.image} alt="Картинка ингредиента" className='image' />
-                <div className={styles.currency}>
-                    <p className={`pr-2 text text_type_digits-default ${styles.price}`}>{ingredient.price}</p>
-                    <CurrencyIcon type="primary" />
+            <Link
+                to={`/ingredients/${ingredient._id}`}
+                className={styles.link}
+                key={ingredient._id}
+                state={{ background: location }}
+            >
+                <div className={`mt-8 ${styles.ingredient}`} onClick={() => {
+                    openModal()
+                }} ref={dragRefFromBurgerIngredients}>
+                    
+                    {state && <div className={`text text_type_digits-default ${styles['ingredient-added']}`}>
+                        {
+                            [...dataOfChosenIngredients, bun].filter((v) => (ingredient.name === v.name ? v.name : null)).length
+                        }
+                    </div>} 
+                    <img src={ingredient.image} alt="Картинка ингредиента" className='image' />
+                    <div className={styles.currency}>
+                        <p className={`pr-2 text text_type_digits-default ${styles.price}`}>{ingredient.price}</p>
+                        <CurrencyIcon type="primary" />
+                    </div>
+                    <p className={`text text_type_main-default ${styles.text}`}>{ingredient.name}</p>
                 </div>
-                <p className={`text text_type_main-default ${styles.text}`}>{ingredient.name}</p>
-            </div>
+            </Link>
         </>
     )
 }
 
-Ingredient.propTypes ={
+Ingredient.propTypes = {
     id: PropTypes.string
 }
 
