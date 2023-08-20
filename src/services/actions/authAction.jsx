@@ -1,3 +1,4 @@
+import { baseUrl, checkResponse } from "./fetchAction";
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const GET_USER_DATA = 'GET_USER_DATA'
@@ -10,15 +11,6 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const PROFILE_INFO = "PROFILE_INFO";
 export const PROFILE_INFO_BACK_TO_INITIAL = 'PROFILE_INFO_BACK_TO_INITIAL';
 export const REDIRECT_RESET_PASSWORD = 'REDIRECT_RESET_PASSWORD'
-
-const baseUrl = 'https://norma.nomoreparties.space/api';
-
-function checkResponse(res) {
-    if (res.ok) {
-        return res.json();
-    }
-    return res.json().then(err => Promise.reject(err));
-}
 
 export const registerUser = (userInfo, callback, backToInitialState) => {
     return function (dispatch) {
@@ -195,8 +187,8 @@ export const resetPassword = (password, token, callback) => {
                     type: PASSWORD_LENGTH,
                     password: password.length
                 })
-                callback();
             })
+            .then(callback)
             .catch(err => {
                 console.log(err);
             })
@@ -225,6 +217,9 @@ export const logout = () => {
                 type: SET_USER_DATA,
                 data: null
             });
+        })
+        .catch((err) => {
+            console.log(err);
         })
     };
 };

@@ -39,10 +39,7 @@ export default function BurgerIngredients() {
                     Начинки
                 </Tab>
             </div>
-            <div className={`${styles.ingredients}`} onScroll={() => {
-                const a = document.querySelector('.ingredients')
-                console.log(a.scrollTop);
-            }}>
+            <div className={`${styles.ingredients}`}>
                 <IngredientList type="bun" ref={refToBun} />
                 <IngredientList type="sauce" ref={refToSauce} />
                 <IngredientList type="main" ref={refToMain} />

@@ -29,15 +29,12 @@ export function LoginPage() {
             type: LOGIN_USER,
             [e.target.type]: e.target.value
         })
-        dispatch({
-            type: PASSWORD_LENGTH,
-            password: userInfo.password.length
-        })
     }
 
     const dispatch = useDispatch();
 
-    const handleClickSubmit = () => {
+    const handleClickSubmit = (e) => {
+        e.preventDefault();
         dispatch(loginUser(userInfo, handleClickAuth, () => {
             dispatch({
                 type: INITIAL_STATE
@@ -46,39 +43,34 @@ export function LoginPage() {
     }
 
     return (
-        <>
-            <AppHeader />
-            <main className={`ml-5 mr-5 ${styles.main}`}>
-                <div className={styles.container}>
-                    <h2 className={`text text_type_main-medium ${styles.title}`}>Вход</h2>
-                    <Input
-                        type='email'
-                        placeholder={'E-mail'}
-                        extraClass={styles.input}
-                        onChange={onChange}
-                    />
-                    <Input
-                        type='password'
-                        placeholder={'Пароль'}
-                        extraClass={styles.input}
-                        onChange={onChange}
-                        icon={"ShowIcon"}
-                    />
-                    <Button extraClass={styles.button} htmlType="button" type="primary" size="large" onClick={() => {
-                        handleClickSubmit();
-                    }}>
-                        Войти
-                    </Button>
-                    <p className={`${styles.register} text text_type_main-default text_color_inactive`}>
-                        Вы - новый пользователь?
-                        <span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickRegister}>Зарегистрироваться</span>
-                    </p>
-                    <p className={`${styles.register} text text_type_main-default text_color_inactive`}>
-                        Забыли пароль?
-                        <span span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickForgotPassword}>Восстановить пароль</span>
-                    </p>
-                </div>
-            </main>
-        </>
+        <main className={`ml-5 mr-5 ${styles.main}`}>
+            <form className={styles.container} onSubmit={handleClickSubmit}>
+                <h2 className={`text text_type_main-medium ${styles.title}`}>Вход</h2>
+                <Input
+                    type='email'
+                    placeholder={'E-mail'}
+                    extraClass={styles.input}
+                    onChange={onChange}
+                />
+                <Input
+                    type='password'
+                    placeholder={'Пароль'}
+                    extraClass={styles.input}
+                    onChange={onChange}
+                    icon={"ShowIcon"}
+                />
+                <Button extraClass={styles.button} htmlType="submit" type="primary" size="large">
+                    Войти
+                </Button>
+                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>
+                    Вы - новый пользователь?
+                    <span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickRegister}>Зарегистрироваться</span>
+                </p>
+                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>
+                    Забыли пароль?
+                    <span span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickForgotPassword}>Восстановить пароль</span>
+                </p>
+            </form>
+        </main>
     );
 }

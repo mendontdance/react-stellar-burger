@@ -6,13 +6,13 @@ export const POST_DATA_TO_SERVER_FAILED = 'POST_DATA_TO_SERVER_FAILED';
 
 export const POST_EMAIL_TO_SERVER_SUCCESS = 'POST_EMAIL_TO_SERVER_SUCCESS';
 export const POST_EMAIL_TO_SERVER_FAILED = 'POST_EMAIL_TO_SERVER_FAILED';
-const baseUrl = 'https://norma.nomoreparties.space/api';
+export const baseUrl = 'https://norma.nomoreparties.space/api';
 
-function checkResponse(res) {
+export function checkResponse(res) {
     if (res.ok) {
         return res.json();
     }
-    return Promise.reject(`Ошибка ${res.status}`);
+    return res.json().then(err => Promise.reject(err));
 }
 
 export const fetchData = () => {

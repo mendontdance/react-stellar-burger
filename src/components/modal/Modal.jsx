@@ -14,14 +14,12 @@ export default function Modal({ onClose, children }) {
         const handleEscKey = (event) => {
             if (event.key === 'Escape') {
                 onClose();
-                navigate('/')
             }
         }
 
         document.addEventListener('keydown', handleEscKey);
 
         return () => {
-            navigate('/')
             document.removeEventListener('keydown', handleEscKey);
         };
     });
@@ -33,7 +31,6 @@ export default function Modal({ onClose, children }) {
                     <div className={styles['button__close']}>
                         <CloseIcon type="primary" onClick={() => {
                             onClose();
-                            navigate('/')
                         }} />
                     </div>
                     <div className={styles.content}>

@@ -30,36 +30,31 @@ export function ForgotPasswordPage() {
         })
     }
 
-    const onClick = () => {
+    const onClick = (e) => {
+        e.preventDefault();
         dispatch(forgotPassword(email, handleClickReset))
         dispatch({
             type: REDIRECT_RESET_PASSWORD,
             redirect: false
         })
+        navigate('/reset-password')
     }
 
     return (
-        <>
-            <AppHeader />
-            <main className={`ml-5 mr-5 ${styles.main}`}>
-                <form className={styles.container}>
-                    <h2 className={`text text_type_main-medium ${styles.title}`}>Восстановление пароля</h2>
-                    <Input
-                        type='email'
-                        placeholder={'E-mail'}
-                        extraClass={styles.input}
-                        onChange={onChange}
-                    />
-                    <Link
-                        to={`/reset-password`}
-                    >
-                        <Button extraClass={styles.button} htmlType="button" type="primary" size="large" onClick={onClick}>
-                            Восстановить
-                        </Button>
-                    </Link>
-                    <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickLogin}>Войти</span></p>
-                </form>
-            </main>
-        </>
+        <main className={`ml-5 mr-5 ${styles.main}`}>
+            <form className={styles.container} onSubmit={onClick}>
+                <h2 className={`text text_type_main-medium ${styles.title}`}>Восстановление пароля</h2>
+                <Input
+                    type='email'
+                    placeholder={'E-mail'}
+                    extraClass={styles.input}
+                    onChange={onChange}
+                />
+                <Button extraClass={styles.button} htmlType="submit" type="primary" size="large">
+                    Восстановить
+                </Button>
+                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickLogin}>Войти</span></p>
+            </form>
+        </main>
     );
 }

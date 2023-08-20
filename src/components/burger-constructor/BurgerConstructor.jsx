@@ -6,14 +6,16 @@ import React from 'react'
 import OrderDetails from '../order-details/OrderDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import {COUNT_AMOUNT_OF_INGREDIENTS_ADD, INITIAL_STATE, SET_BUN} from '../../services/actions/ingredientCounterAction'
+import { COUNT_AMOUNT_OF_INGREDIENTS_ADD, INITIAL_STATE, SET_BUN } from '../../services/actions/ingredientCounterAction'
 import { postData } from '../../services/actions/fetchAction';
+import { useNavigate } from 'react-router-dom';
 
 export default function BurgerConstructor() {
 
     const [showModal, setShowModal] = React.useState(false);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [{ isOver }, dropRefFromBurgerIngredients] = useDrop({
         accept: 'drag from burger-ingredients',
@@ -46,6 +48,22 @@ export default function BurgerConstructor() {
     console.log(counter);
     const totalPrice = bun.price * 2 + sumOfIngredients > 0 ? bun.price * 2 + sumOfIngredients : "0"
     const getOrderNumber = useSelector(store => store.data.orderNumber)
+
+    const isAuth = useSelector(store => store.user.user)
+    
+    const handleClickOrder = () => {
+        if(isAuth) {
+            dispatch(postData(dataOfChosenIngredients, () => {
+                dispatch({
+                    type: INITIAL_STATE
+                })
+                setShowModal(true);
+            }))
+        } else {
+            navigate('/login')
+        }
+    }
+
 
     return (
         <section className={`mt-25 ${styles['burger-constructor']}`} ref={dropRefFromBurgerIngredients} >
@@ -101,20 +119,11 @@ export default function BurgerConstructor() {
                         <CurrencyIcon type="primary" />
                     </div>
                 </div>
-                <Button htmlType="button" type="primary" size="large" onClick={
-                    () => {
-                        dispatch(postData(dataOfChosenIngredients, () => {
-                            dispatch({
-                                type: INITIAL_STATE
-                            })
-                            setShowModal(true);
-                        }))
-                    }
-                }>
+                <Button htmlType="button" type="primary" size="large" onClick={handleClickOrder}>
                     Оформить заказ
                 </Button>
                 {showModal && <Modal onClose={() => setShowModal(false)}>
-                    <OrderDetails number={getOrderNumber}/>
+                    <OrderDetails number={getOrderNumber} />
                 </Modal>}
             </div>
         </section>

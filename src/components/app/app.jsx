@@ -57,17 +57,21 @@ export default function App() {
     }
   }, [redirect])
 
+  const onClose = () => {
+    closeModal(false)
+    navigate('/')
+  }
+
   return (success &&
     <DndProvider backend={HTML5Backend}>
+      <AppHeader />
       <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
         <Route path="ingredients/:id" element={
-          <>
-            <AppHeader />
-            <div className={styles.section}>
-              <IngredientDetailsPage data={data} />
-            </div>
-          </>} />
+          <div className={styles.section}>
+            <IngredientDetailsPage data={data} />
+          </div>
+        } />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />} />
         <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
@@ -80,7 +84,7 @@ export default function App() {
       {background && (
         <Routes>
           <Route path="ingredients/:id" element={
-            <Modal onClose={() => { closeModal(false) }}>
+            <Modal onClose={onClose}>
               <IngredientDetailsPage data={data} />
             </Modal>
           } />

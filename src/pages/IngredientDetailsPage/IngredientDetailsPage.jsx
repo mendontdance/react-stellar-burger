@@ -9,8 +9,6 @@ export function IngredientDetailsPage({ data }) {
     })
 
     return (
-        <>
-            <IngredientDetails data={ingredient}></IngredientDetails>
-        </>
+        <IngredientDetails data={ingredient}></IngredientDetails>
     )
 }
