@@ -4,8 +4,11 @@ import ModalOverlay from '../modal-overlay/ModalOverlay.jsx';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom';
 
-export default function Modal({onClose, children}) {
+export default function Modal({ onClose, children }) {
+
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         const handleEscKey = (event) => {
@@ -30,7 +33,9 @@ export default function Modal({onClose, children}) {
                             onClose();
                         }} />
                     </div>
-                    {children}
+                    <div className={styles.content}>
+                        {children}
+                    </div>
                 </div>
                 <ModalOverlay onClose={onClose} />
             </section>,
