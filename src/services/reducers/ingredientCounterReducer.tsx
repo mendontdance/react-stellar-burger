@@ -4,18 +4,26 @@ import {
     CHANGE_INGREDIENT_ORDER,
     INITIAL_STATE,
     SET_BUN
-} from '../actions/ingredientCounterAction.jsx';
+} from '../actions/ingredientCounterAction';
+import { TIngredient } from '../types';
 
-export const initialState = {
+export type TInitialState = {
+    data: TIngredient[],
+    counter: number,
+    sum: number,
+    order: number,
+    bun: boolean
+}
+
+export const initialState: TInitialState = {
     data: [],
     counter: 0,
     sum: 0,
     order: 0,
-    currentIngredient: null,
     bun: false
 };
 
-export const ingredientCounterReducer = (state = initialState, action) => {
+export const ingredientCounterReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case COUNT_AMOUNT_OF_INGREDIENTS_ADD: {
             return {

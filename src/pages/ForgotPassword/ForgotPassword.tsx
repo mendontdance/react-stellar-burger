@@ -1,36 +1,40 @@
+import React from 'react';
 import styles from './forgotpassword.module.css';
-import AppHeader from '../../components/appheader/AppHeader';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
 import { FORGOT_PASSWORD, REDIRECT_RESET_PASSWORD } from '../../services/actions/authAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../../services/actions/authAction';
-import { Link } from 'react-router-dom';
+import { RootState } from '../../services/reducers/rootReducer';
+import { FC } from 'react';
 
-export function ForgotPasswordPage() {
+export const ForgotPasswordPage: FC = () => {
 
     let navigate = useNavigate();
     const dispatch = useDispatch();
-    const email = useSelector(store => store.user.email)
+    const email: string = useSelector((store: RootState) => store.user.email)
 
-    const handleClickLogin = () => {
+    const handleClickLogin = (): void => {
         let path = `/login`;
         navigate(path);
     }
 
-    const handleClickReset = () => {
+    const handleClickReset = (): void => {
         let path = `/reset-password`;
         navigate(path);
     }
 
-    const onChange = (e) => {
+    const onChange = (e: any): void => {
         dispatch({
             type: FORGOT_PASSWORD,
             email: e.target.value
         })
+        if(e.target.type === 'email') {
+            setValue(e.target.value)
+        }
     }
 
-    const onClick = (e) => {
+    const onClick = (e: any): void => {
         e.preventDefault();
         dispatch(forgotPassword(email, handleClickReset))
         dispatch({
@@ -39,6 +43,8 @@ export function ForgotPasswordPage() {
         })
         navigate('/reset-password')
     }
+
+    const [value, setValue] = React.useState<string>('')
 
     return (
         <main className={`ml-5 mr-5 ${styles.main}`}>
@@ -49,11 +55,12 @@ export function ForgotPasswordPage() {
                     placeholder={'E-mail'}
                     extraClass={styles.input}
                     onChange={onChange}
+                    value={value}
                 />
                 <Button extraClass={styles.button} htmlType="submit" type="primary" size="large">
                     Восстановить
                 </Button>
-                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickLogin}>Войти</span></p>
+                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickLogin}>Войти</span></p>
             </form>
         </main>
     );

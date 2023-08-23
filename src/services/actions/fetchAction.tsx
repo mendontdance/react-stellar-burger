@@ -1,22 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { TCustomResponse, TResponseBody, TUser } from "../types";
 export const GET_DATA_FROM_SERVER_SUCCESS = 'GET_DATA_FROM_SERVER_SUCCESS';
 export const GET_DATA_FROM_SERVER_FAILED = 'GET_DATA_FROM_SERVER_FAILED';
 export const POST_DATA_TO_SERVER_SUCCESS = 'POST_DATA_TO_SERVER_SUCCESS';
 export const POST_DATA_TO_SERVER_FAILED = 'POST_DATA_TO_SERVER_FAILED';
-
 export const POST_EMAIL_TO_SERVER_SUCCESS = 'POST_EMAIL_TO_SERVER_SUCCESS';
 export const POST_EMAIL_TO_SERVER_FAILED = 'POST_EMAIL_TO_SERVER_FAILED';
 export const baseUrl = 'https://norma.nomoreparties.space/api';
 
-export function checkResponse(res) {
+export function checkResponse(res: TCustomResponse): TResponseBody<TUser> {
     if (res.ok) {
         return res.json();
     }
-    return res.json().then(err => Promise.reject(err));
+    return res.json().then((err: any): Promise<void> => Promise.reject(err));
 }
 
 export const fetchData = () => {
-    return function (dispatch) {
+    return function (dispatch: any):void {
         fetch(`${baseUrl}/ingredients`)
             .then(checkResponse)
             .then(res => {
@@ -34,8 +33,8 @@ export const fetchData = () => {
     }
 }
 
-export const postData = (data, callback) => {
-    return function (dispatch) {
+export const postData = (data: any, callback: () => void) => {
+    return function (dispatch: any):void {
         fetch(`${baseUrl}/orders`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -1,8 +1,14 @@
-import styles from './ingredientcomposition.module.css'
-import PropTypes from 'prop-types';
+import { FC } from 'react';
+import styles from './ingredientcomposition.module.css';
 
-export default function IngredientComposition(props) {
+type TProps = {
+    carbohydrates?: number,
+    fat?: number,
+    proteins?: number,
+    calories?: number
+}
 
+export const IngredientComposition: FC<TProps> = (props) => {
     const typeOfEnergyValue = props.carbohydrates ? "Углеводы, г" : props.fat ? "Жиры, г" : props.proteins ? "Белки, г" : props.calories ? "Калории, ккал" : null;
 
     const amountOfEnergyValue = props.carbohydrates ? props.carbohydrates : props.fat ? props.fat : props.proteins ? props.proteins : props.calories ? props.calories : null;
@@ -14,10 +20,3 @@ export default function IngredientComposition(props) {
         </div>
     )
 }
-
-IngredientComposition.propTypes = {
-    calories: PropTypes.number,
-    fat: PropTypes.number,
-    proteins: PropTypes.number,
-    carbohydrates: PropTypes.number
-  };

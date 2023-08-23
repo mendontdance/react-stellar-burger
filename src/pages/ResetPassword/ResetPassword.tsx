@@ -1,32 +1,40 @@
 import styles from './resetpassword.module.css';
-import AppHeader from '../../components/appheader/AppHeader';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
 import { RESET_PASSWORD, resetPassword, REDIRECT_RESET_PASSWORD } from '../../services/actions/authAction';
 import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
+import React, { FC, RefObject } from 'react';
+import { RootState } from '../../services/reducers/rootReducer';
 
-export function ResetPasswordPage() {
+type TResetInfo = {
+    password: string,
+    text: string
+}
+
+export const ResetPasswordPage: FC = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const resetInfo = useSelector(store => store.user.resetInfo)
+    const resetInfo: TResetInfo = useSelector((store: RootState) => store.user.resetInfo)
 
-    const handleClickLogin = () => {
+    const handleClickLogin = (): void => {
         let path = `/login`;
         navigate(path);
     }
 
-    const onChange = (e) => {
+    const onChange = (e: any): void => {
         dispatch({
             type: RESET_PASSWORD,
             [e.target.type]: e.target.value
         })
+        if(e.target.type === 'password') {
+            setValuePassword(e.target.value)
+        } else {
+            setValueText(e.target.value)
+        }
     }
 
-    console.log(resetInfo);
-
-    const handleClickSubmit = (e) => {
+    const handleClickSubmit = (e: any): void => {
         e.preventDefault();
         dispatch(resetPassword(resetInfo.password, resetInfo.text, handleClickLogin))
         dispatch({
@@ -35,12 +43,19 @@ export function ResetPasswordPage() {
         })
     }
 
-    const inputRefPassword = React.useRef(null);
-    const inputRefToken = React.useRef(null)
+    const inputRefPassword = React.useRef(null) as RefObject<
+        HTMLInputElement
+    > | null;;
+    const inputRefToken = React.useRef(null) as RefObject<
+        HTMLInputElement
+    > | null;
 
-    const onIconClick = (inputRef) => {
-        setTimeout(() => inputRef.current.focus(), 0)
+    const onIconClick = (inputRef:RefObject<HTMLInputElement> | null) => {
+        setTimeout(() => inputRef?.current?.focus(), 0)
     }
+
+    const[valuePassword, setValuePassword] = React.useState<string>('');
+    const[valueText, setValueText] = React.useState<string>('')
 
     return (
         <main className={`ml-5 mr-5 ${styles.main}`}>
@@ -54,6 +69,7 @@ export function ResetPasswordPage() {
                     ref={inputRefPassword}
                     onChange={onChange}
                     onIconClick={() => onIconClick(inputRefPassword)}
+                    value={valuePassword}
                 />
                 <Input
                     type='text'
@@ -61,11 +77,12 @@ export function ResetPasswordPage() {
                     extraClass={styles.input}
                     onChange={onChange}
                     ref={inputRefToken}
+                    value={valueText}
                 />
                 <Button extraClass={styles.button} htmlType="submit" type="primary" size="large">
                     Сохранить
                 </Button>
-                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickLogin}>Войти</span></p>
+                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickLogin}>Войти</span></p>
             </form>
         </main>
     );

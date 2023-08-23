@@ -3,15 +3,21 @@ import {
     OPEN_ORDER_MODAL_FAILED,
     OPEN_INGREDIENT_MODAL_SUCCESS,
     OPEN_INGREDIENT_MODAL_FAILED
-} from '../actions/modalAction.jsx';
+} from '../actions/modalAction';
 
-export const initialState = {
+type TInitialState = {
+    showModalOrder: boolean,
+    showModalIngredient: boolean,
+    data: {},
+}
+
+export const initialState: TInitialState = {
     showModalOrder: false,
     showModalIngredient: false,
     data: {},
 };
 
-export const modalReducer = (state = initialState, action) => {
+export const modalReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case OPEN_ORDER_MODAL_SUCCESS: {
             return {

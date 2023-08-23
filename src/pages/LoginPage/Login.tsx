@@ -1,39 +1,50 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css';
-import AppHeader from '../../components/appheader/AppHeader';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser, LOGIN_USER, INITIAL_STATE, PASSWORD_LENGTH } from '../../services/actions/authAction';
+import { RootState } from '../../services/reducers/rootReducer';
+import React, { FC } from 'react';
+import { TLoginInfo } from '../../services/types';
 
-export function LoginPage() {
+export const LoginPage: FC = () => {
+
+    const [valueName, setValueName] = React.useState<string>('')
+    const [valueEmail, setValueEmail] = React.useState<string>('')
 
     const navigate = useNavigate();
-    const userInfo = useSelector(store => store.user.userLoginInfo)
-    const handleClickRegister = () => {
+    const userInfo:TLoginInfo = useSelector((store: RootState) => store.user.userLoginInfo)
+    
+    const handleClickRegister = (): void => {
         let path = `/register`;
         navigate(path);
     }
 
-    const handleClickAuth = () => {
+    const handleClickAuth = (): void => {
         let path = `/`;
         navigate(path);
     }
 
-    const handleClickForgotPassword = () => {
+    const handleClickForgotPassword = (): void => {
         let path = `/forgot-password`;
         navigate(path);
     }
 
-    const onChange = (e) => {
+    const onChange = (e: any): void => {
         dispatch({
             type: LOGIN_USER,
             [e.target.type]: e.target.value
         })
+        if (e.target.type === 'email') {
+            setValueEmail(e.target.value)
+        } else {
+            setValueName(e.target.value)
+        }
     }
 
     const dispatch = useDispatch();
 
-    const handleClickSubmit = (e) => {
+    const handleClickSubmit = (e: any): void => {
         e.preventDefault();
         dispatch(loginUser(userInfo, handleClickAuth, () => {
             dispatch({
@@ -51,6 +62,7 @@ export function LoginPage() {
                     placeholder={'E-mail'}
                     extraClass={styles.input}
                     onChange={onChange}
+                    value={valueEmail}
                 />
                 <Input
                     type='password'
@@ -58,6 +70,7 @@ export function LoginPage() {
                     extraClass={styles.input}
                     onChange={onChange}
                     icon={"ShowIcon"}
+                    value={valueName}
                 />
                 <Button extraClass={styles.button} htmlType="submit" type="primary" size="large">
                     Войти
@@ -68,7 +81,7 @@ export function LoginPage() {
                 </p>
                 <p className={`${styles.register} text text_type_main-default text_color_inactive`}>
                     Забыли пароль?
-                    <span span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickForgotPassword}>Восстановить пароль</span>
+                    <span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickForgotPassword}>Восстановить пароль</span>
                 </p>
             </form>
         </main>

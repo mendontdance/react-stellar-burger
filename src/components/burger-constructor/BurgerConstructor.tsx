@@ -1,23 +1,29 @@
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
-import BurgerComponent from '../burger-component/BurgerComponent.jsx';
-import Modal from '../modal/Modal.jsx';
-import React from 'react'
-import OrderDetails from '../order-details/OrderDetails';
+import { BurgerComponent } from '../burger-component/BurgerComponent';
+import { Modal } from '../modal/Modal';
+import React, { FC } from 'react'
+import { OrderDetails } from '../order-details/OrderDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { COUNT_AMOUNT_OF_INGREDIENTS_ADD, INITIAL_STATE, SET_BUN } from '../../services/actions/ingredientCounterAction'
 import { postData } from '../../services/actions/fetchAction';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../services/reducers/rootReducer';
+import { TIngredient } from '../../services/types';
 
-export default function BurgerConstructor() {
+type TCollectedProps = {
+    isOver: boolean
+}
 
-    const [showModal, setShowModal] = React.useState(false);
+export const BurgerConstructor: FC = () => {
+
+    const [showModal, setShowModal] = React.useState<boolean>(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [{ isOver }, dropRefFromBurgerIngredients] = useDrop({
+    const [{ isOver }, dropRefFromBurgerIngredients] = useDrop<TIngredient, unknown, TCollectedProps>({
         accept: 'drag from burger-ingredients',
         collect: (monitor) => ({
             isOver: monitor.isOver(),
@@ -40,19 +46,19 @@ export default function BurgerConstructor() {
         }
     })
 
-    const bun = useSelector(store => store.counter.bun)
+    const bun: TIngredient = useSelector((store: RootState) => store.counter.bun)
 
-    const dataOfChosenIngredients = useSelector(store => store.counter.data)
-    const sumOfIngredients = useSelector(store => store.counter.sum)
-    const counter = useSelector(store => store.counter) // kek
+    const dataOfChosenIngredients: TIngredient[] = useSelector((store: RootState) => store.counter.data)
+    const sumOfIngredients: number = useSelector((store: RootState) => store.counter.sum)
+    const counter: any = useSelector((store: RootState) => store.counter) // kek
     console.log(counter);
-    const totalPrice = bun.price * 2 + sumOfIngredients > 0 ? bun.price * 2 + sumOfIngredients : "0"
-    const getOrderNumber = useSelector(store => store.data.orderNumber)
+    const totalPrice: number | "0" = bun.price * 2 + sumOfIngredients > 0 ? bun.price * 2 + sumOfIngredients : "0"
+    const getOrderNumber: number = useSelector((store: RootState) => store.data.orderNumber)
 
-    const isAuth = useSelector(store => store.user.user)
-    
-    const handleClickOrder = () => {
-        if(isAuth) {
+    const isAuth: null | {} = useSelector((store: RootState) => store.user.user)
+
+    const handleClickOrder = (): void => {
+        if (isAuth) {
             dispatch(postData(dataOfChosenIngredients, () => {
                 dispatch({
                     type: INITIAL_STATE
@@ -63,7 +69,6 @@ export default function BurgerConstructor() {
             navigate('/login')
         }
     }
-
 
     return (
         <section className={`mt-25 ${styles['burger-constructor']}`} ref={dropRefFromBurgerIngredients} >

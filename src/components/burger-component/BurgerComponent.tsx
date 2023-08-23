@@ -1,21 +1,31 @@
-
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-component.module.css'
 import { useDrag, useDrop } from 'react-dnd'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { COUNT_AMOUNT_OF_INGREDIENTS_DELETE, CHANGE_INGREDIENT_ORDER } from '../../services/actions/ingredientCounterAction'
-import PropTypes from 'prop-types';
+import { TIngredient } from '../../services/types'
+import { RootState } from '../../services/reducers/rootReducer'
+import { FC } from 'react'
 
-export default function BurgerComponent({ data, index }) {
-    const dataOfChosenIngredients = useSelector(store => store.counter.data)
+type TDragIngredient = {
+    ingredient: TIngredient
+}
+
+type TProps = {
+    data: TIngredient, 
+    index: number
+}
+
+export const BurgerComponent: FC<TProps> = ({ data, index }) => {
+
+    const dataOfChosenIngredients = useSelector((store: RootState) => store.counter.data)
     const dispatch = useDispatch()
 
-    const findIndex = (item) => {
+    const findIndex = (item: TIngredient):number => {
         return dataOfChosenIngredients.indexOf(item);
     };
 
-    const [, dragRefInsideConstructor] = useDrag({
+    const [, dragRefInsideConstructor] = useDrag<TDragIngredient, unknown, unknown>({
         type: "drag inside constructor",
         item: { ingredient: data },
         collect: (monitor) => ({
@@ -23,7 +33,7 @@ export default function BurgerComponent({ data, index }) {
         })
     });
 
-    const deleteIngredient = () => {
+    const deleteIngredient = ():void => {
         dispatch({
             type: COUNT_AMOUNT_OF_INGREDIENTS_DELETE,
             data: data,
@@ -32,7 +42,7 @@ export default function BurgerComponent({ data, index }) {
         })
     }
 
-    const [, dropRefInsideConstructor] = useDrop({
+    const [, dropRefInsideConstructor] = useDrop<TDragIngredient, unknown, unknown>({
         accept: 'drag inside constructor',
         hover: ({ ingredient }) => {
             if (ingredient._id === data._id) return;
@@ -62,11 +72,6 @@ export default function BurgerComponent({ data, index }) {
             />
         </div>
     )
-}
-
-BurgerComponent.propTypes ={
-    data: PropTypes.object, 
-    index:PropTypes.number
 }
 
 

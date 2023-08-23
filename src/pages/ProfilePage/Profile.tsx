@@ -1,55 +1,66 @@
-import React from 'react'
+import React, { FC, RefObject } from 'react'
 import styles from './profile.module.css'
-import AppHeader from '../../components/appheader/AppHeader'
-import { Input, EditIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserData, logout, setUserData } from '../../services/actions/authAction';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PROFILE_INFO, PROFILE_INFO_BACK_TO_INITIAL, INITIAL_STATE } from '../../services/actions/authAction';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../services/reducers/rootReducer';
+import { TRawUser, TUserInfo } from "../../services/types";
 
-export function ProfilePage() {
+type TIsDisabled = {
+    name: boolean,
+    email: boolean,
+    password: boolean
+}
+
+export const ProfilePage : FC = () => {
 
     const dispatch = useDispatch();
-    const state = useSelector(store => store.user.user);
 
-    const [isDisabled, setDisabled] = React.useState({
+    const [isDisabled, setDisabled] = React.useState<TIsDisabled>({
         name: true,
         email: true,
         password: true
     })
 
-    const [initialState, setInitialState] = React.useState(state)
+    const user:TUserInfo = useSelector((store: RootState) => store.user.user);
+    const [initialState, setInitialState] = React.useState<TRawUser>(user)
 
-    console.log(state);
-
-    const inputRefName = React.useRef(null);
-    const inputRefEmail = React.useRef(null)
-    const inputRefPassword = React.useRef(null)
+    const inputRefName = React.useRef() as RefObject<
+        HTMLInputElement
+    > | null;
+    const inputRefEmail = React.useRef() as RefObject<
+        HTMLInputElement
+    > | null;
+    const inputRefPassword = React.useRef() as RefObject<
+        HTMLInputElement
+    > | null;
 
     const onIconClickName = () => {
-        setTimeout(() => inputRefName.current.focus(), 0)
+        setTimeout(() => inputRefName?.current?.focus(), 0)
         setDisabled({ ...isDisabled, name: !isDisabled.name })
     }
     const onIconClickEmail = () => {
-        setTimeout(() => inputRefEmail.current.focus(), 0)
+        setTimeout(() => inputRefEmail?.current?.focus(), 0)
         setDisabled({ ...isDisabled, email: !isDisabled.email })
     }
     const onIconClickPassword = () => {
-        setTimeout(() => inputRefPassword.current.focus(), 0)
+        setTimeout(() => inputRefPassword?.current?.focus(), 0)
         setDisabled({ ...isDisabled, password: !isDisabled.password })
     }
 
-    const onChange = (e) => {
+    const onChange = (e:any):void => {
         dispatch({
             type: PROFILE_INFO,
             [e.target.name]: e.target.value
         })
     }
 
-
-    const handleClickSubmit = (e) => {
-        dispatch(setUserData(state))
+    const handleClickSubmit = (e:any):void => {
+        e.preventDefault();
+        dispatch(setUserData(user));
         dispatch({
             type: INITIAL_STATE,
         })
@@ -60,7 +71,7 @@ export function ProfilePage() {
         })
     }
 
-    const handleClickCancel = (e) => {
+    const handleClickCancel = (e:any):void => {
         dispatch({
             type: PROFILE_INFO_BACK_TO_INITIAL,
             data: initialState
@@ -77,7 +88,7 @@ export function ProfilePage() {
     }, [dispatch])
 
     const navigate = useNavigate();
-    const logOut = () => {
+    const logOut = ():void => {
         dispatch(logout())
         navigate('/')
     }
@@ -107,20 +118,20 @@ export function ProfilePage() {
                             icon={"EditIcon"}
                             name={"name"}
                             errorText={'Ошибка'}
-                            value={state.name}
+                            value={user.name}
                             ref={inputRefName}
                             disabled={isDisabled.name}
                             onIconClick={onIconClickName}
                             onChange={onChange}
                         />
                         <Input
-                            type='e-mail'
+                            type='email'
                             placeholder={'Логин'}
                             extraClass={styles.input}
                             icon={"EditIcon"}
                             name="email"
                             errorText={'Ошибка'}
-                            value={state.email}
+                            value={user.email}
                             ref={inputRefEmail}
                             disabled={isDisabled.email}
                             onIconClick={onIconClickEmail}
@@ -134,7 +145,7 @@ export function ProfilePage() {
                             icon={"EditIcon"}
                             errorText={'Ошибка'}
                             ref={inputRefPassword}
-                            value={state.password || ""}
+                            value={user.password || ""}
                             disabled={isDisabled.password}
                             onIconClick={onIconClickPassword}
                             onChange={onChange}

@@ -10,12 +10,42 @@ import {
     PROFILE_INFO,
     PROFILE_INFO_BACK_TO_INITIAL,
     REDIRECT_RESET_PASSWORD
-} from '../actions/authAction.jsx';
+} from '../actions/authAction';
+import { TRegisteredInfo, TLoginInfo, TUserInfo } from '../types';
 
-const initialState = {
-    registeredUserInfo: {},
-    userLoginInfo: {},
-    profileInfo: {},
+type TInitialState = {
+    registeredUserInfo: TRegisteredInfo,
+    userLoginInfo: TLoginInfo,
+    profileInfo: TUserInfo,
+    user: {
+        success?: boolean,
+        email?: string,
+        name?: string,
+        password?: string
+    },
+    isAuthChecked: boolean,
+    password: number,
+    email: string | null,
+    resetInfo: {} | null,
+    redirect: boolean
+}
+
+const initialState: TInitialState = {
+    registeredUserInfo: {
+        email: '',
+        password: '',
+        name: ''
+    },
+    userLoginInfo: {
+        name: '',
+        email: '',
+        password: '',
+    },
+    profileInfo: {
+        name: '',
+        email: '',
+        password: '',
+    },
     user: { success: false },
     isAuthChecked: false,
     password: 0,
@@ -24,9 +54,9 @@ const initialState = {
     redirect: true
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case REDIRECT_RESET_PASSWORD:{
+        case REDIRECT_RESET_PASSWORD: {
             return {
                 ...state,
                 redirect: action.redirect

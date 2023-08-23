@@ -1,16 +1,12 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from './burger-ingredients.module.css'
-import { IngredientList } from '../ingredient-list/IngredientList.jsx'
+import { IngredientList } from '../ingredient-list/IngredientList'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { showModalOrder } from '../../services/actions/modalAction';
-import Modal from "../modal/Modal";
-import IngredientDetails from '../ingredient-details/IngredientDetails.jsx'
 import { useInView } from 'react-intersection-observer';
-import { OPEN_INGREDIENT_MODAL_FAILED } from '../../services/actions/modalAction';
 
-
-export default function BurgerIngredients() {
+export const BurgerIngredients: FC = () => {
 
     const dispatch = useDispatch()
 
@@ -21,6 +17,10 @@ export default function BurgerIngredients() {
         [dispatch]
     );
 
+    const onClick = ():void => {
+        console.log(123);
+    } // typescript ругался, что обязательно нужна функция onClick в Tab
+
     const { ref: refToBun, inView: bunIsVisible } = useInView();
     const { ref: refToSauce, inView: sauceIsVisible } = useInView();
     const { ref: refToMain, inView: mainIsVisible } = useInView();
@@ -29,13 +29,13 @@ export default function BurgerIngredients() {
         <section className={`mt-10 ${styles['burger-ingredients']}`}>
             <h2 className={`text text_type_main-large ${styles.title}`}>Соберите бургер</h2>
             <div className={styles['burger-ingredients__container']}>
-                <Tab value="one" active={bunIsVisible}>
+                <Tab value="one" active={bunIsVisible} onClick={onClick}>
                     Булки
                 </Tab>
-                <Tab value="two" active={sauceIsVisible && !bunIsVisible}>
+                <Tab value="two" active={sauceIsVisible && !bunIsVisible} onClick={onClick}>
                     Соусы
                 </Tab>
-                <Tab value="three" active={mainIsVisible || (!bunIsVisible && !sauceIsVisible)}>
+                <Tab value="three" active={mainIsVisible || (!bunIsVisible && !sauceIsVisible)} onClick={onClick}>
                     Начинки
                 </Tab>
             </div>

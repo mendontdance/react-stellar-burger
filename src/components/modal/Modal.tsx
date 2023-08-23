@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from './modal.module.css'
-import ModalOverlay from '../modal-overlay/ModalOverlay.jsx';
+import { ModalOverlay } from '../modal-overlay/ModalOverlay';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom';
 
-export default function Modal({ onClose, children }) {
+type TProps = {
+    onClose: () => void,
+    children: any
+}
 
-    const navigate = useNavigate();
+export const Modal: FC<TProps> = ({ onClose, children }) => {
 
     React.useEffect(() => {
-        const handleEscKey = (event) => {
+        const handleEscKey = (event: any): void => {
             if (event.key === 'Escape') {
                 onClose();
             }
@@ -19,7 +20,7 @@ export default function Modal({ onClose, children }) {
 
         document.addEventListener('keydown', handleEscKey);
 
-        return () => {
+        return (): void => {
             document.removeEventListener('keydown', handleEscKey);
         };
     });
@@ -39,11 +40,7 @@ export default function Modal({ onClose, children }) {
                 </div>
                 <ModalOverlay onClose={onClose} />
             </section>,
-            document.getElementById('modals')
+            document.getElementById('modals') as Element
         )
     );
-}
-
-Modal.propTypes = {
-    onClose: PropTypes.func,
 }

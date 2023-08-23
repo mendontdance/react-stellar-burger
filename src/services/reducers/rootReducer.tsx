@@ -9,10 +9,12 @@ import { ingredientCounterReducer } from './ingredientCounterReducer';
 import { authReducer } from './authReducer';
 
 const rootReducer = combineReducers({
+    user: authReducer,
     data: fetchReducer,
-    modal: modalReducer,
     counter: ingredientCounterReducer,
-    user: authReducer
+    modal: modalReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
