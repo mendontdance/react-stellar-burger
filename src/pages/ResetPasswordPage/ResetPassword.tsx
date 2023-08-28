@@ -2,9 +2,9 @@ import styles from './resetpassword.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
 import { RESET_PASSWORD, resetPassword, REDIRECT_RESET_PASSWORD } from '../../services/actions/authAction';
-import { useDispatch, useSelector } from 'react-redux';
 import React, { FC, RefObject } from 'react';
 import { RootState } from '../../services/reducers/rootReducer';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 
 type TResetInfo = {
     password: string,

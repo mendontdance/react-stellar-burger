@@ -3,7 +3,6 @@ import styles from "./ingredient.module.css"
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
-import PropTypes from 'prop-types';
 import { OPEN_INGREDIENT_MODAL_SUCCESS } from '../../services/actions/modalAction';
 import { Link, useLocation } from 'react-router-dom';
 import { RootState } from '../../services/reducers/rootReducer';
@@ -11,7 +10,7 @@ import { TIngredient } from '../../services/types';
 
 export const Ingredient: FC<{ id: string }> = ({ id }) => {
 
-    const ingredient: TIngredient = useSelector((store: RootState) => {
+    const ingredient: TIngredient = useSelector((store: RootState): any => {
         return store.data.data.find((elem: TIngredient): boolean => {
             return elem._id === id
         })
@@ -34,7 +33,7 @@ export const Ingredient: FC<{ id: string }> = ({ id }) => {
     const [state, setState] = React.useState<boolean>(false)
 
     React.useEffect(() => {
-        if ([...dataOfChosenIngredients, bun].filter((v) => (ingredient.name === v.name ? v.name : null)).length > 0) {
+        if ([...dataOfChosenIngredients, bun].filter((v) => (ingredient?.name === v.name ? v.name : null)).length > 0) {
             setState(true)
         } else {
             setState(false)
@@ -56,9 +55,9 @@ export const Ingredient: FC<{ id: string }> = ({ id }) => {
 
     return (
         <Link
-            to={`/ingredients/${ingredient._id}`}
+            to={`/ingredients/${ingredient?._id}`}
             className={styles.link}
-            key={ingredient._id}
+            key={ingredient?._id}
             state={{ background: location }}
         >
             <div className={`mt-8 ${styles.ingredient}`} onClick={() => {
@@ -66,15 +65,15 @@ export const Ingredient: FC<{ id: string }> = ({ id }) => {
             }} ref={dragRefFromBurgerIngredients}>
                 {state && <div className={`text text_type_digits-default ${styles['ingredient-added']}`}>
                     {
-                        [...dataOfChosenIngredients, bun].filter((v) => (ingredient.name === v.name ? v.name : null)).length
+                        [...dataOfChosenIngredients, bun].filter((v) => (ingredient?.name === v.name ? v.name : null)).length
                     }
                 </div>}
-                <img src={ingredient.image} alt="Картинка ингредиента" className='image' />
+                <img src={ingredient?.image} alt="Картинка ингредиента" className='image' />
                 <div className={styles.currency}>
-                    <p className={`pr-2 text text_type_digits-default ${styles.price}`}>{ingredient.price}</p>
+                    <p className={`pr-2 text text_type_digits-default ${styles.price}`}>{ingredient?.price}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <p className={`text text_type_main-default ${styles.text}`}>{ingredient.name}</p>
+                <p className={`text text_type_main-default ${styles.text}`}>{ingredient?.name}</p>
             </div>
         </Link>
     )

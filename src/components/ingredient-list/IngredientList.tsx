@@ -1,8 +1,8 @@
 import React, { FC, Ref } from 'react'
 import { Ingredient } from '../ingredient/Ingredient'
 import styles from './ingredientlist.module.css'
-import { useSelector } from 'react-redux';
 import { RootState } from '../../services/reducers/rootReducer.js';
+import { useSelector } from '../../services/types/hooks';
 
 export const IngredientList: FC<{ type: string, ref: Ref<HTMLDivElement> }> = React.forwardRef(
     ({ type }, ref) => {

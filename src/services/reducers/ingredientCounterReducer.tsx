@@ -5,30 +5,38 @@ import {
     INITIAL_STATE,
     SET_BUN
 } from '../actions/ingredientCounterAction';
-import { TIngredient } from '../types';
 
-export type TInitialState = {
-    data: TIngredient[],
-    counter: number,
-    sum: number,
-    order: number,
-    bun: boolean
-}
+import { TCounterInitialState, TCounterActions } from '../types/ingredientCounter'
 
-export const initialState: TInitialState = {
+export const initialState: TCounterInitialState = {
     data: [],
     counter: 0,
     sum: 0,
     order: 0,
-    bun: false
+    bun: {
+        calories: 0,
+        carbohydrates: 0,
+        fat: 0,
+        image: '',
+        image_large: '',
+        image_mobile: '',
+        name: '',
+        price: 0,
+        proteins: 0,
+        type: '',
+        __v: 0,
+        _id: '',
+        _newId: '',
+        order: 0
+    }
 };
 
-export const ingredientCounterReducer = (state = initialState, action: any) => {
+export const ingredientCounterReducer = (state = initialState, action: TCounterActions): TCounterInitialState => {
     switch (action.type) {
         case COUNT_AMOUNT_OF_INGREDIENTS_ADD: {
             return {
                 ...state,
-                data: [...state.data, { ...action.data, order: Number(action.order) + Number(state.order) }],
+                data: [...state.data, action.data],
                 counter: action.counter,
                 sum: Number(state.sum) + Number(action.price),
                 order: state.order + action.order
@@ -42,7 +50,7 @@ export const ingredientCounterReducer = (state = initialState, action: any) => {
                         return element
                     }
                 }),
-                counter: action.counter,
+                counter: action?.counter,
                 sum: Number(state.sum) - Number(action.price)
             }
         }

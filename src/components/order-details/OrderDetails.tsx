@@ -2,7 +2,7 @@ import styles from './orderdetails.module.css'
 import done from '../../images/done.png'
 import { FC } from 'react';
 
-export const OrderDetails: FC<{number: number}> = ({number}) => {
+export const OrderDetails: FC<{number?: number}> = ({number}) => {
     return (
         <div className={`${styles.modal} pb-30`}>
             <p className={`${styles.order} text text_type_digits-large pt-30`}>{number}</p>

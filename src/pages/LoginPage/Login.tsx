@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser, LOGIN_USER, INITIAL_STATE, PASSWORD_LENGTH } from '../../services/actions/authAction';
 import { RootState } from '../../services/reducers/rootReducer';
 import React, { FC } from 'react';
 import { TLoginInfo } from '../../services/types';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 
 export const LoginPage: FC = () => {
 

@@ -1,9 +1,16 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './appheader.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FC } from 'react'
 
 export const AppHeader: FC = () => {
+
+    const navigate = useNavigate()
+
+    const onClick = () :void => {
+        navigate('/feed')
+    }
+
     return (
         <header className={styles.header}>
             <div className={styles.links}>
@@ -11,7 +18,7 @@ export const AppHeader: FC = () => {
                     <BurgerIcon type="primary" />
                     <p className='text text_type_main-default ml-2'>Конструктор</p>
                 </Link>
-                <div className={`pt-4 pr-5 pb-4 pl-5 mr-2 ${styles.link} ${styles['personal-account']}`}>
+                <div className={`pt-4 pr-5 pb-4 pl-5 mr-2 ${styles.link} ${styles['personal-account']}`} onClick={onClick}>
                     <ListIcon type="primary" />
                     <p className='text text_type_main-default ml-2 text_color_inactive'>Лента заказов</p>
                 </div>

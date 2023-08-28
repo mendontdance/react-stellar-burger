@@ -1,11 +1,11 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-component.module.css'
 import { useDrag, useDrop } from 'react-dnd'
-import { useDispatch, useSelector } from 'react-redux'
 import { COUNT_AMOUNT_OF_INGREDIENTS_DELETE, CHANGE_INGREDIENT_ORDER } from '../../services/actions/ingredientCounterAction'
 import { TIngredient } from '../../services/types'
 import { RootState } from '../../services/reducers/rootReducer'
 import { FC } from 'react'
+import { useDispatch, useSelector } from '../../services/types/hooks'
 
 type TDragIngredient = {
     ingredient: TIngredient
@@ -18,7 +18,7 @@ type TProps = {
 
 export const BurgerComponent: FC<TProps> = ({ data, index }) => {
 
-    const dataOfChosenIngredients = useSelector((store: RootState) => store.counter.data)
+    const dataOfChosenIngredients = useSelector((store) => store.counter.data)
     const dispatch = useDispatch()
 
     const findIndex = (item: TIngredient):number => {
@@ -37,7 +37,7 @@ export const BurgerComponent: FC<TProps> = ({ data, index }) => {
         dispatch({
             type: COUNT_AMOUNT_OF_INGREDIENTS_DELETE,
             data: data,
-            counter: --data.__v,
+            counter: data.__v ? --data.__v : null,
             price: data.price
         })
     }

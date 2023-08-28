@@ -9,28 +9,11 @@ import {
     RESET_PASSWORD,
     PROFILE_INFO,
     PROFILE_INFO_BACK_TO_INITIAL,
-    REDIRECT_RESET_PASSWORD
+    REDIRECT_RESET_PASSWORD,
 } from '../actions/authAction';
-import { TRegisteredInfo, TLoginInfo, TUserInfo } from '../types';
+import { TAuthActions, TAuthInitialState } from '../types/auth';
 
-type TInitialState = {
-    registeredUserInfo: TRegisteredInfo,
-    userLoginInfo: TLoginInfo,
-    profileInfo: TUserInfo,
-    user: {
-        success?: boolean,
-        email?: string,
-        name?: string,
-        password?: string
-    },
-    isAuthChecked: boolean,
-    password: number,
-    email: string | null,
-    resetInfo: {} | null,
-    redirect: boolean
-}
-
-const initialState: TInitialState = {
+const initialState: TAuthInitialState = {
     registeredUserInfo: {
         email: '',
         password: '',
@@ -49,12 +32,15 @@ const initialState: TInitialState = {
     user: { success: false },
     isAuthChecked: false,
     password: 0,
-    email: null,
-    resetInfo: null,
+    email: '',
+    resetInfo: {
+        password: '',
+        text: ''
+    },
     redirect: true
 };
 
-export const authReducer = (state = initialState, action: any) => {
+export const authReducer = (state = initialState, action: TAuthActions):TAuthInitialState => {
     switch (action.type) {
         case REDIRECT_RESET_PASSWORD: {
             return {

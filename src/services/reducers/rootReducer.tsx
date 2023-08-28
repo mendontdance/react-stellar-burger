@@ -1,20 +1,19 @@
 import { combineReducers } from 'redux';
-import thunk from 'redux-thunk';
-import { applyMiddleware } from 'redux';
-import { legacy_createStore as createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { fetchReducer } from './fetchReducer'
 import { modalReducer } from './modalReducer'
 import { ingredientCounterReducer } from './ingredientCounterReducer';
 import { authReducer } from './authReducer';
+import { store } from '../store';
+import { wsReducer } from './wsReducer';
+import { wsReducerProfile } from './wsProfileReducer';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     user: authReducer,
     data: fetchReducer,
     counter: ingredientCounterReducer,
     modal: modalReducer,
+    order: wsReducer,
+    profile: wsReducerProfile
 });
 
-export type RootState = ReturnType<typeof rootReducer>
-
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+export type RootState = ReturnType<typeof store.getState>; 

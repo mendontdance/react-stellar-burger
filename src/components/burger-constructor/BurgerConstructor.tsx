@@ -4,13 +4,14 @@ import { BurgerComponent } from '../burger-component/BurgerComponent';
 import { Modal } from '../modal/Modal';
 import React, { FC } from 'react'
 import { OrderDetails } from '../order-details/OrderDetails';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { COUNT_AMOUNT_OF_INGREDIENTS_ADD, INITIAL_STATE, SET_BUN } from '../../services/actions/ingredientCounterAction'
 import { postData } from '../../services/actions/fetchAction';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../services/reducers/rootReducer';
 import { TIngredient } from '../../services/types';
+import { WS_SEND_MESSAGE } from '../../services/actions/wsAction';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 
 type TCollectedProps = {
     isOver: boolean
@@ -33,7 +34,7 @@ export const BurgerConstructor: FC = () => {
                 dispatch({
                     type: COUNT_AMOUNT_OF_INGREDIENTS_ADD,
                     data: item,
-                    counter: ++item.__v,
+                    counter: item.__v ? ++item.__v : null,
                     price: item.price,
                     order: ++item.order,
                 })
@@ -47,34 +48,39 @@ export const BurgerConstructor: FC = () => {
     })
 
     const bun: TIngredient = useSelector((store: RootState) => store.counter.bun)
-
     const dataOfChosenIngredients: TIngredient[] = useSelector((store: RootState) => store.counter.data)
     const sumOfIngredients: number = useSelector((store: RootState) => store.counter.sum)
     const counter: any = useSelector((store: RootState) => store.counter) // kek
     console.log(counter);
     const totalPrice: number | "0" = bun.price * 2 + sumOfIngredients > 0 ? bun.price * 2 + sumOfIngredients : "0"
-    const getOrderNumber: number = useSelector((store: RootState) => store.data.orderNumber)
-
+    const getOrderNumber: number | undefined = useSelector((store: RootState) => store.data.orderNumber)
     const isAuth: null | {} = useSelector((store: RootState) => store.user.user)
 
     const handleClickOrder = (): void => {
         if (isAuth) {
-            dispatch(postData(dataOfChosenIngredients, () => {
+            dispatch(postData(allOrderIngredientsId, () => {
                 dispatch({
                     type: INITIAL_STATE
                 })
                 setShowModal(true);
+                dispatch({
+                    type: WS_SEND_MESSAGE,
+                    payload: {message: allOrderIngredientsId}
+                })
             }))
         } else {
             navigate('/login')
         }
     }
 
+    const ingredientsId = dataOfChosenIngredients.map((elem) => elem._id)
+    const allOrderIngredientsId = [bun._id, ...ingredientsId, bun._id];
+
     return (
         <section className={`mt-25 ${styles['burger-constructor']}`} ref={dropRefFromBurgerIngredients} >
             <div className={styles['burger-container']}>
                 {
-                    bun ? <div className='ml-6 mr-2 mb-2'>
+                    bun.type === 'bun' ? <div className='ml-6 mr-2 mb-2'>
                         <ConstructorElement
                             type="top"
                             isLocked={true}
@@ -89,7 +95,7 @@ export const BurgerConstructor: FC = () => {
                         </div>
                 }
                 {
-                    bun ? <div className={`${styles.ingredients}`}>
+                    bun.type === 'bun' ? <div className={`${styles.ingredients}`}>
                         {
                             dataOfChosenIngredients.map((ingredient, index) =>
                                 <BurgerComponent
@@ -105,7 +111,7 @@ export const BurgerConstructor: FC = () => {
                         <div className={`mt-10 ml-10 text text_type_digits-default`}>После выбора булки выберите желаемые ингредиенты</div>
                 }
                 {
-                    bun && <div className='ml-6 mr-2 mb-2'>
+                    bun.type === 'bun' && <div className='ml-6 mr-2 mb-2'>
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}

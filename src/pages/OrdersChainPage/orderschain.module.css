@@ -1,0 +1,46 @@
+@media screen and (max-width: 1220px) {
+    .main {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.link {
+    text-decoration: none;
+    color: inherit
+}
+
+
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 1220px) {
+    .content {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.orders {
+    box-sizing: border-box;
+    height: 660px;
+    overflow-x: none;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    width: 608px;
+    padding-right: 8px;
+}
+
+.orders::-webkit-scrollbar {
+    width: 8px;
+}
+
+.orders::-webkit-scrollbar-track {
+    background: #2f2f37;
+}
+
+.orders::-webkit-scrollbar-thumb {
+    background-color: #8584ac;
+}

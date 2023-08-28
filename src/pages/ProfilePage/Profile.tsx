@@ -1,13 +1,13 @@
 import React, { FC, RefObject } from 'react'
 import styles from './profile.module.css'
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch } from 'react-redux';
 import { getUserData, logout, setUserData } from '../../services/actions/authAction';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PROFILE_INFO, PROFILE_INFO_BACK_TO_INITIAL, INITIAL_STATE } from '../../services/actions/authAction';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../services/reducers/rootReducer';
 import { TRawUser, TUserInfo } from "../../services/types";
+import { useDispatch, useSelector } from '../../services/types/hooks';
 
 type TIsDisabled = {
     name: boolean,
@@ -25,7 +25,7 @@ export const ProfilePage : FC = () => {
         password: true
     })
 
-    const user:TUserInfo = useSelector((store: RootState) => store.user.user);
+    const user: TUserInfo = useSelector((store: RootState) => store.user.user);
     const [initialState, setInitialState] = React.useState<TRawUser>(user)
 
     const inputRefName = React.useRef() as RefObject<
@@ -94,8 +94,8 @@ export const ProfilePage : FC = () => {
     }
 
 
-    const handleClickOrdersChain = () => {
-        navigate('/orders-chain')
+    const handleClickOrders = ():void => {
+        navigate('/orders')
     }
 
     return (
@@ -105,7 +105,7 @@ export const ProfilePage : FC = () => {
                     <menu className={styles.menu}>
                         <ul className={styles.menu_list}>
                             <li className={`${styles.li} text text_type_main-medium`}>Профиль</li>
-                            <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={handleClickOrdersChain}>История заказов</li>
+                            <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={handleClickOrders}>История заказов</li>
                             <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={logOut}>Выход</li>
                         </ul>
                         <p className={`${styles.text} text text_type_main-small`}>В этом разделе вы можете изменить свои персональные данные</p>
@@ -118,7 +118,7 @@ export const ProfilePage : FC = () => {
                             icon={"EditIcon"}
                             name={"name"}
                             errorText={'Ошибка'}
-                            value={user.name}
+                            value={user?.name || ''}
                             ref={inputRefName}
                             disabled={isDisabled.name}
                             onIconClick={onIconClickName}
@@ -131,7 +131,7 @@ export const ProfilePage : FC = () => {
                             icon={"EditIcon"}
                             name="email"
                             errorText={'Ошибка'}
-                            value={user.email}
+                            value={user?.email || ''}
                             ref={inputRefEmail}
                             disabled={isDisabled.email}
                             onIconClick={onIconClickEmail}

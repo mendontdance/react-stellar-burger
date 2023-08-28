@@ -2,20 +2,9 @@ import React, { FC } from 'react'
 import styles from './burger-ingredients.module.css'
 import { IngredientList } from '../ingredient-list/IngredientList'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch } from 'react-redux';
-import { showModalOrder } from '../../services/actions/modalAction';
 import { useInView } from 'react-intersection-observer';
 
 export const BurgerIngredients: FC = () => {
-
-    const dispatch = useDispatch()
-
-    React.useEffect(
-        () => {
-            dispatch(showModalOrder());
-        },
-        [dispatch]
-    );
 
     const onClick = ():void => {
         console.log(123);

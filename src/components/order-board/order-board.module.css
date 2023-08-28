@@ -1,0 +1,58 @@
+.board {
+    width: 580px;
+}
+
+.orders {
+    display: flex;
+    justify-content: space-between;
+    gap: 36px;
+}
+
+.order-ready {
+    flex: auto;
+}
+
+.order-in-progress {
+    flex: auto;
+}
+
+.order__title {
+    margin: 0;
+    margin-bottom: 24px;
+}
+
+.number {
+    margin: 0;
+    text-shadow: 0 0 0.2em #26277a, 0 0 0.2em #26277a;
+}
+
+.order__list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px;
+    flex-wrap: wrap;
+}
+
+.order__item_ready {
+    color: #00CCCC;
+    list-style: none;
+}
+
+.order__item_ready:last-child {
+    margin-bottom: 0px;
+}
+
+.order__item_progress {
+    list-style: none;
+}
+
+.order__item_progress:last-child {
+    margin-bottom: 0px;
+}
+
+.order__executed {
+    margin-top: 60px;
+}

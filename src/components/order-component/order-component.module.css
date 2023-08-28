@@ -1,0 +1,128 @@
+.container {
+    background-color: #1C1C21;
+    border-radius: 30px;
+    padding: 24px;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.number {
+    margin: 0;
+}
+
+.date {
+    margin: 0;
+}
+
+.icons {
+    flex: auto;
+    position: relative;
+    height: 64px;
+}
+
+.icon {
+    box-sizing: border-box;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #801AB2;
+    background-color: #000;
+}
+
+.icon_1 {
+    position: absolute;
+    z-index: 11;
+}
+
+.icon_2 {
+    position: absolute;
+    left: 44px;
+    z-index: 10;
+}
+
+.icon_3 {
+    position: absolute;
+    left: 88px;
+    z-index: 9;
+}
+
+.icon_4 {
+    position: absolute;
+    left: 132px;
+    z-index: 8;
+}
+
+.icon_5 {
+    position: absolute;
+    left: 176px;
+    z-index: 7;
+}
+
+.icon_6 {
+    position: absolute;
+    left: 220px;
+    z-index: 6;
+}
+
+.title {
+    margin: 0;
+    margin-top: 24px;
+}
+
+.price__number {
+    margin: 0;
+}
+
+.footer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    display: flex;
+    margin-left: 24px;
+}
+
+.currency-image {
+    padding-left: 8px;
+    width: 22px;
+    height: 22px;
+    object-fit: cover;
+}
+
+.status {
+    margin: 0;
+    margin-top: 8px;
+}
+
+.background_elem {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 220px;
+    z-index: 5;
+}
+
+.background_overlay {
+    box-sizing: border-box;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    background-color: #000;
+    opacity: .6;
+    top: 0;
+    border-radius: 100%;
+    border: 3px solid #801AB2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

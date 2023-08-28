@@ -2,11 +2,11 @@ import styles from './register.module.css';
 import React from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import { registerUser, REGISTER_USER, INITIAL_STATE } from '../../services/actions/authAction';
 import { FC } from 'react';
 import { RootState } from '../../services/reducers/rootReducer';
 import { TRegisteredInfo } from '../../services/types';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 
 export const RegisterPage: FC = () => {
 

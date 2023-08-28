@@ -1,10 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 import { SET_USER_AUTH } from "../../services/actions/authAction";
 import { checkUserAuth } from "../../services/actions/authAction";
 import { RootState } from "../../services/reducers/rootReducer";
 import { TRawUser } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 
 const Protected = ({ onlyUnAuth = false, component }: { onlyUnAuth: boolean, component: any }) => {
   const dispatch = useDispatch();

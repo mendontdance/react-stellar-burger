@@ -1,24 +1,24 @@
 import { baseUrl, checkResponse } from "./fetchAction";
 import { TUserInfo, TResponseBody, TUser } from "../types";
-export const REGISTER_USER = 'REGISTER_USER';
-export const LOGIN_USER = 'LOGIN_USER';
-export const GET_USER_DATA = 'GET_USER_DATA'
-export const INITIAL_STATE = 'INITIAL_STATE';
-export const SET_USER_AUTH = 'SET_USER_AUTH';
-export const SET_USER_DATA = 'SET_USER_DATA';
-export const PASSWORD_LENGTH = 'PASSWORD_LENGTH';
-export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
-export const RESET_PASSWORD = 'RESET_PASSWORD';
-export const PROFILE_INFO = "PROFILE_INFO";
-export const PROFILE_INFO_BACK_TO_INITIAL = 'PROFILE_INFO_BACK_TO_INITIAL';
-export const REDIRECT_RESET_PASSWORD = 'REDIRECT_RESET_PASSWORD'
+export const REGISTER_USER: 'REGISTER_USER' = 'REGISTER_USER';
+export const LOGIN_USER: 'LOGIN_USER' = 'LOGIN_USER';
+export const GET_USER_DATA: 'GET_USER_DATA' = 'GET_USER_DATA'
+export const INITIAL_STATE: 'INITIAL_STATE' = 'INITIAL_STATE';
+export const SET_USER_AUTH: 'SET_USER_AUTH' = 'SET_USER_AUTH';
+export const SET_USER_DATA: 'SET_USER_DATA' = 'SET_USER_DATA';
+export const PASSWORD_LENGTH: 'PASSWORD_LENGTH' = 'PASSWORD_LENGTH';
+export const FORGOT_PASSWORD: 'FORGOT_PASSWORD' = 'FORGOT_PASSWORD';
+export const RESET_PASSWORD: 'RESET_PASSWORD' = 'RESET_PASSWORD';
+export const PROFILE_INFO: 'PROFILE_INFO' = "PROFILE_INFO";
+export const PROFILE_INFO_BACK_TO_INITIAL: 'PROFILE_INFO_BACK_TO_INITIAL' = 'PROFILE_INFO_BACK_TO_INITIAL';
+export const REDIRECT_RESET_PASSWORD: 'REDIRECT_RESET_PASSWORD' = 'REDIRECT_RESET_PASSWORD'
 
 export const registerUser = (
     userInfo: TUserInfo,
     callback: () => void,
     backToInitialState: () => void
 ) => {
-    return function ():Promise<void> {
+    return function (): Promise<void> {
         return fetch(`${baseUrl}/auth/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -176,7 +176,7 @@ export const forgotPassword = (email: string, callback: () => void) => {
     }
 }
 
-export const resetPassword = (password:string, token: string, callback: () => void) => {
+export const resetPassword = (password: string, token: string, callback: () => void) => {
     return function (dispatch: any): Promise<void> {
         return fetch(`${baseUrl}/password-reset/reset`, {
             method: 'POST',
@@ -204,7 +204,7 @@ export const resetPassword = (password:string, token: string, callback: () => vo
 }
 
 export const logout = () => {
-    return (dispatch:any): Promise<void> => {
+    return (dispatch: any): Promise<void> => {
         return fetch(`${baseUrl}/auth/logout`, {
             method: "POST",
             headers: {
@@ -236,7 +236,7 @@ export const checkUserAuth = () => {
     return (dispatch: any): void => {
         if (localStorage.getItem("accessToken")) {
             dispatch(getUserData())
-                .catch((error:any) => {
+                .catch((error: any) => {
                     localStorage.removeItem("accessToken");
                     localStorage.removeItem("refreshToken");
                     dispatch({

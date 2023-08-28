@@ -3,10 +3,10 @@ import styles from './forgotpassword.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
 import { FORGOT_PASSWORD, REDIRECT_RESET_PASSWORD } from '../../services/actions/authAction';
-import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../../services/actions/authAction';
 import { RootState } from '../../services/reducers/rootReducer';
 import { FC } from 'react';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 
 export const ForgotPasswordPage: FC = () => {
 

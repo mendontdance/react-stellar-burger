@@ -1,3 +1,13 @@
+import { TModalActions } from './modal';
+import { TAuthActions } from './auth';
+import { TFetchActions } from './fetch';
+import { TCounterActions } from './ingredientCounter'
+import { ThunkAction } from 'redux-thunk';
+import { Action, ActionCreator } from 'redux';
+import { RootState } from '../reducers/rootReducer';
+import { TWSActionsProfileOrders } from './wsProfile';
+import { TWSActions } from './ws';
+
 export type TCustomResponse = {
     readonly headers: Headers;
     readonly ok: boolean;
@@ -17,7 +27,7 @@ export type TResponseBody<TDataType> = {
     refreshToken: string;
     user?: TDataType;
     message?: string;
-    headers?: Headers;
+    headers: Headers;
     data?: any
 }
 
@@ -29,10 +39,10 @@ export type TUser = {
 };
 
 export type TUserInfo = {
-    email: string;
-    password: string;
+    email?: string;
+    password?: string;
     text?: string;
-    name: string;
+    name?: string;
 }
 
 export type TResponseBodyWithoutToken<TDataType> = {
@@ -52,13 +62,13 @@ export type TIngredient = {
     image_large: string,
     image_mobile: string,
     name: string,
-    order: number,
     price: number,
     proteins: number,
     type: string,
-    __v: number,
+    __v: number | undefined,
     _id: string,
-    _newId?: string
+    _newId?: string,
+    order: number
 }
 
 export type TRawUser = {
@@ -79,3 +89,34 @@ export type TLoginInfo = {
     password: string,
     name: string;
 }
+
+export type TActions = TModalActions
+    | TAuthActions
+    | TFetchActions
+    | TCounterActions
+    | TWSActions
+    | TWSActionsProfileOrders
+
+// Типизация всех экшенов приложения
+export type TApplicationActions = TActions;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+    ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>;
+
+export type TMessageIngredient = {
+    ingredients: string[],
+    _id: string,
+    status: string,
+    number: number,
+    createdAt: string,
+    updatedAt: string,
+    name: string
+}
+
+export type TMessage = {
+    success: boolean,
+    orders: TMessageIngredient[],
+    total: number,
+    totalToday: number
+} 
