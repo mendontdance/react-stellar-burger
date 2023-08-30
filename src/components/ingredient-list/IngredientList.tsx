@@ -1,13 +1,12 @@
 import React, { FC, Ref } from 'react'
 import { Ingredient } from '../ingredient/Ingredient'
 import styles from './ingredientlist.module.css'
-import { RootState } from '../../services/reducers/rootReducer.js';
 import { useSelector } from '../../services/types/hooks';
 
 export const IngredientList: FC<{ type: string, ref: Ref<HTMLDivElement> }> = React.forwardRef(
     ({ type }, ref) => {
 
-        const data = useSelector((store: RootState) => store.data.data)
+        const data = useSelector((store) => store.data.data)
         const typeOfIgredient = type === 'bun' ? "Булки" : type === "sauce" ? "Соусы" : type === "main" ? "Начинки" : null;
 
         const listOfIgredients = data.map(ingredient => {

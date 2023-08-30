@@ -13,4 +13,4 @@ export type AppDispatch = Dispatch<TApplicationActions>;
 // Теперь этот хук «знает» структуру хранилища
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
-export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>(); 
+export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();

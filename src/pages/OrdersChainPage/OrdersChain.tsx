@@ -14,7 +14,8 @@ export const OrdersChainPage: FC = () => {
 
     React.useEffect(() => {
         dispatch({
-            type: WS_CONNECTION_START
+            type: WS_CONNECTION_START,
+            payload: '/all'
         })
         return () => {
             dispatch({

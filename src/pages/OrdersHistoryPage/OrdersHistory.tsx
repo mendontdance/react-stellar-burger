@@ -12,7 +12,8 @@ export const OrdersHistoryPage: FC = () => {
     const dispatch = useDispatch();
     React.useEffect(() => {
         dispatch({
-            type: WS_CONNECTION_START_PROFILE_ORDERS
+            type: WS_CONNECTION_START_PROFILE_ORDERS,
+            payload: `?token=${localStorage.getItem('accessToken')?.split(' ')[1]}`
         })
         return () => {
             dispatch({
@@ -37,26 +38,26 @@ export const OrdersHistoryPage: FC = () => {
 
     const location = useLocation();
     const listOfMessagesProfile = useSelector(store => store.profile)
-    const listOfOrders = listOfMessagesProfile.messages.orders.map((elem) => {
+    const listOfOrders = listOfMessagesProfile.messages.orders ? listOfMessagesProfile.messages.orders.map((elem) => {
         return (
             <Link
-                to={`/feed/${elem?._id}`}
+                to={`/orders/${elem?._id}`}
                 className={styles.link}
                 key={elem?._id}
-                state={{ feed: location }}
+                state={{ profile: location }}
             >
                 <OrderComponent key={elem._id} data={elem} />
             </Link>
         )
-    }).reverse()
+    }).reverse() : null
 
     return (
         <main>
             <section className={styles.container}>
                 <menu className={styles.menu}>
                     <ul className={styles.menu_list}>
-                        <li className={`${styles.li} text text_type_main-medium`} onClick={handleClickProfile}>Профиль</li>
-                        <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={handleClickOrders}>История заказов</li>
+                        <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={handleClickProfile}>Профиль</li>
+                        <li className={`${styles.li} text text_type_main-medium`} onClick={handleClickOrders}>История заказов</li>
                         <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={logOut}>Выход</li>
                     </ul>
                     <p className={`${styles.text} text text_type_main-small`}>В этом разделе вы можете просмотреть свою историю заказов</p>

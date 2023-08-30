@@ -8,7 +8,6 @@ import { useDrop } from 'react-dnd';
 import { COUNT_AMOUNT_OF_INGREDIENTS_ADD, INITIAL_STATE, SET_BUN } from '../../services/actions/ingredientCounterAction'
 import { postData } from '../../services/actions/fetchAction';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../../services/reducers/rootReducer';
 import { TIngredient } from '../../services/types';
 import { WS_SEND_MESSAGE } from '../../services/actions/wsAction';
 import { useDispatch, useSelector } from '../../services/types/hooks';
@@ -47,14 +46,14 @@ export const BurgerConstructor: FC = () => {
         }
     })
 
-    const bun: TIngredient = useSelector((store: RootState) => store.counter.bun)
-    const dataOfChosenIngredients: TIngredient[] = useSelector((store: RootState) => store.counter.data)
-    const sumOfIngredients: number = useSelector((store: RootState) => store.counter.sum)
-    const counter: any = useSelector((store: RootState) => store.counter) // kek
+    const bun: TIngredient = useSelector((store) => store.counter.bun)
+    const dataOfChosenIngredients: TIngredient[] = useSelector((store) => store.counter.data)
+    const sumOfIngredients: number = useSelector((store) => store.counter.sum)
+    const counter = useSelector((store) => store.counter) // kek
     console.log(counter);
     const totalPrice: number | "0" = bun.price * 2 + sumOfIngredients > 0 ? bun.price * 2 + sumOfIngredients : "0"
-    const getOrderNumber: number | undefined = useSelector((store: RootState) => store.data.orderNumber)
-    const isAuth: null | {} = useSelector((store: RootState) => store.user.user)
+    const getOrderNumber: number | undefined = useSelector((store) => store.data.orderNumber)
+    const isAuth = useSelector((store) => store.user.user)
 
     const handleClickOrder = (): void => {
         if (isAuth) {

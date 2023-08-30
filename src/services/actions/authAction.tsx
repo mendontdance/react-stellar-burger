@@ -1,5 +1,8 @@
 import { baseUrl, checkResponse } from "./fetchAction";
-import { TUserInfo, TResponseBody, TUser } from "../types";
+import { TUserInfo, TResponseBody, TUser, TCheckUserAuth, TRegisteredInfo, TInfoUser, TCustomResponse, AppThunk, TActions } from "../types";
+import { AppDispatch } from "../types/hooks";
+import { ThunkAction } from "redux-thunk";
+import { RootState } from "../reducers/rootReducer";
 export const REGISTER_USER: 'REGISTER_USER' = 'REGISTER_USER';
 export const LOGIN_USER: 'LOGIN_USER' = 'LOGIN_USER';
 export const GET_USER_DATA: 'GET_USER_DATA' = 'GET_USER_DATA'
@@ -42,7 +45,7 @@ export const loginUser = (
     callback: () => void,
     backToInitialState: () => void
 ) => {
-    return function (dispatch: any): Promise<void> {
+    return function (dispatch: AppDispatch): Promise<void> {
         return fetch(`${baseUrl}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -62,8 +65,8 @@ export const loginUser = (
                     data: res.user
                 })
             })
-            .then(backToInitialState)
             .then(callback)
+            .then(backToInitialState)
             .catch(err => {
                 console.log(err);
             })
@@ -86,7 +89,7 @@ export const refreshToken = () => {
     }
 }
 
-const fetchWithRefresh = async (url: string, options: any): Promise<TResponseBody<TUser>> => {
+const fetchWithRefresh = async (url: string, options: any) => {
     try {
         const res = await fetch(url, options);
         return await checkResponse(res);
@@ -108,7 +111,7 @@ const fetchWithRefresh = async (url: string, options: any): Promise<TResponseBod
 };
 
 export const getUserData = () => {
-    return (dispatch: any): Promise<string | void> => {
+    return (dispatch: AppDispatch): Promise<string | void> => {
         return fetchWithRefresh(`${baseUrl}/auth/user`, {
             method: "GET",
             headers: {
@@ -128,8 +131,8 @@ export const getUserData = () => {
     };
 };
 
-export const setUserData = ({ name, email, password }: TUserInfo) => {
-    return (dispatch: any): Promise<string | void> => {
+export const setUserData = (user: TInfoUser) => {
+    return (dispatch: AppDispatch): Promise<string | void> => {
         return fetchWithRefresh(`${baseUrl}/auth/user`, {
             method: "PATCH",
             headers: {
@@ -137,9 +140,9 @@ export const setUserData = ({ name, email, password }: TUserInfo) => {
                 authorization: localStorage.getItem("accessToken")
             },
             body: JSON.stringify({
-                "name": name,
-                "email": email,
-                "password": password
+                "name": user?.name,
+                "email": user?.email,
+                "password": user?.password
             })
         }).then((res) => {
             if (res.success) {
@@ -177,7 +180,7 @@ export const forgotPassword = (email: string, callback: () => void) => {
 }
 
 export const resetPassword = (password: string, token: string, callback: () => void) => {
-    return function (dispatch: any): Promise<void> {
+    return function (dispatch: AppDispatch): Promise<void> {
         return fetch(`${baseUrl}/password-reset/reset`, {
             method: 'POST',
             headers: {
@@ -204,7 +207,7 @@ export const resetPassword = (password: string, token: string, callback: () => v
 }
 
 export const logout = () => {
-    return (dispatch: any): Promise<void> => {
+    return (dispatch: AppDispatch): Promise<void> => {
         return fetch(`${baseUrl}/auth/logout`, {
             method: "POST",
             headers: {
@@ -223,7 +226,7 @@ export const logout = () => {
                 });
                 dispatch({
                     type: SET_USER_DATA,
-                    data: null
+                    data: undefined
                 });
             })
             .catch((err) => {
@@ -232,16 +235,16 @@ export const logout = () => {
     };
 };
 
-export const checkUserAuth = () => {
-    return (dispatch: any): void => {
+export const checkUserAuth:AppThunk = () => {
+    return (dispatch) => {
         if (localStorage.getItem("accessToken")) {
             dispatch(getUserData())
-                .catch((error: any) => {
+                .catch((error: string) => {
                     localStorage.removeItem("accessToken");
                     localStorage.removeItem("refreshToken");
                     dispatch({
                         type: SET_USER_DATA,
-                        data: null
+                        data: undefined
                     });
                     console.log(error);
                 })
@@ -256,7 +259,7 @@ export const checkUserAuth = () => {
             });
             dispatch({
                 type: SET_USER_DATA,
-                data: null
+                data: undefined
             });
         }
     };

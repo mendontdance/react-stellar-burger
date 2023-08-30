@@ -33,7 +33,7 @@ export type TSetUserAuth = {
 }
 export type TSetUserData = {
     readonly type: typeof SET_USER_DATA;
-    readonly data: TResponseBody<TUser>
+    readonly data: TUser | undefined
 }
 export type TPasswordLength = {
     readonly type: typeof PASSWORD_LENGTH;
@@ -58,6 +58,7 @@ export type TRedirectResetPassword = {
     readonly redirect: boolean;
 }
 
+
 export type TAuthActions =
     TRegisterUser
     | TLoginUser
@@ -70,14 +71,13 @@ export type TAuthActions =
     | TResetPassword
     | TProfileInfo
     | TProfileInfoBackToInitial
-    | TRedirectResetPassword;
+    | TRedirectResetPassword
 
 export type TAuthInitialState = {
     registeredUserInfo: TRegisteredInfo,
     userLoginInfo: TLoginInfo,
     profileInfo: TUserInfo,
-    user: {
-        success?: boolean,
+    user?: {
         email?: string,
         name?: string,
         password?: string

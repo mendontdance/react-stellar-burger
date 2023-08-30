@@ -2,8 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './login.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser, LOGIN_USER, INITIAL_STATE, PASSWORD_LENGTH } from '../../services/actions/authAction';
-import { RootState } from '../../services/reducers/rootReducer';
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC, FormEvent } from 'react';
 import { TLoginInfo } from '../../services/types';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 
@@ -13,7 +12,7 @@ export const LoginPage: FC = () => {
     const [valueEmail, setValueEmail] = React.useState<string>('')
 
     const navigate = useNavigate();
-    const userInfo:TLoginInfo = useSelector((store: RootState) => store.user.userLoginInfo)
+    const userInfo:TLoginInfo = useSelector((store) => store.user.userLoginInfo)
     
     const handleClickRegister = (): void => {
         let path = `/register`;
@@ -30,7 +29,7 @@ export const LoginPage: FC = () => {
         navigate(path);
     }
 
-    const onChange = (e: any): void => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
         dispatch({
             type: LOGIN_USER,
             [e.target.type]: e.target.value
@@ -44,7 +43,7 @@ export const LoginPage: FC = () => {
 
     const dispatch = useDispatch();
 
-    const handleClickSubmit = (e: any): void => {
+    const handleClickSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         dispatch(loginUser(userInfo, handleClickAuth, () => {
             dispatch({

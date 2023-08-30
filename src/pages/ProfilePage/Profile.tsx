@@ -1,11 +1,10 @@
-import React, { FC, RefObject } from 'react'
+import React, { ChangeEvent, FC, FormEvent, RefObject } from 'react'
 import styles from './profile.module.css'
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { getUserData, logout, setUserData } from '../../services/actions/authAction';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PROFILE_INFO, PROFILE_INFO_BACK_TO_INITIAL, INITIAL_STATE } from '../../services/actions/authAction';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../../services/reducers/rootReducer';
 import { TRawUser, TUserInfo } from "../../services/types";
 import { useDispatch, useSelector } from '../../services/types/hooks';
 
@@ -15,7 +14,7 @@ type TIsDisabled = {
     password: boolean
 }
 
-export const ProfilePage : FC = () => {
+export const ProfilePage: FC = () => {
 
     const dispatch = useDispatch();
 
@@ -25,8 +24,8 @@ export const ProfilePage : FC = () => {
         password: true
     })
 
-    const user: TUserInfo = useSelector((store: RootState) => store.user.user);
-    const [initialState, setInitialState] = React.useState<TRawUser>(user)
+    const user = useSelector((store) => store.user.user);
+    const [initialState, setInitialState] = React.useState(user)
 
     const inputRefName = React.useRef() as RefObject<
         HTMLInputElement
@@ -51,14 +50,14 @@ export const ProfilePage : FC = () => {
         setDisabled({ ...isDisabled, password: !isDisabled.password })
     }
 
-    const onChange = (e:any):void => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
         dispatch({
             type: PROFILE_INFO,
             [e.target.name]: e.target.value
         })
     }
 
-    const handleClickSubmit = (e:any):void => {
+    const handleClickSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         dispatch(setUserData(user));
         dispatch({
@@ -71,7 +70,7 @@ export const ProfilePage : FC = () => {
         })
     }
 
-    const handleClickCancel = (e:any):void => {
+    const handleClickCancel = (): void => {
         dispatch({
             type: PROFILE_INFO_BACK_TO_INITIAL,
             data: initialState
@@ -88,13 +87,12 @@ export const ProfilePage : FC = () => {
     }, [dispatch])
 
     const navigate = useNavigate();
-    const logOut = ():void => {
+    const logOut = (): void => {
         dispatch(logout())
         navigate('/')
     }
 
-
-    const handleClickOrders = ():void => {
+    const handleClickOrders = (): void => {
         navigate('/orders')
     }
 
@@ -110,7 +108,7 @@ export const ProfilePage : FC = () => {
                         </ul>
                         <p className={`${styles.text} text text_type_main-small`}>В этом разделе вы можете изменить свои персональные данные</p>
                     </menu>
-                    <div>
+                    <form onSubmit={handleClickSubmit}>
                         <Input
                             type='text'
                             placeholder={'Имя'}
@@ -145,7 +143,7 @@ export const ProfilePage : FC = () => {
                             icon={"EditIcon"}
                             errorText={'Ошибка'}
                             ref={inputRefPassword}
-                            value={user.password || ""}
+                            value={user?.password || ""}
                             disabled={isDisabled.password}
                             onIconClick={onIconClickPassword}
                             onChange={onChange}
@@ -154,11 +152,11 @@ export const ProfilePage : FC = () => {
                             <Button htmlType="button" type="secondary" size="medium" onClick={handleClickCancel}>
                                 Отмена
                             </Button>
-                            <Button htmlType="submit" type="primary" size="medium" onClick={handleClickSubmit}>
+                            <Button htmlType="submit" type="primary" size="medium">
                                 Сохранить
                             </Button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
         </main>

@@ -4,15 +4,45 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { OrderIngredientComponent } from "../../components/order-ingredient-component/OrderIngredientComponent";
 import { useParams } from "react-router-dom";
 import { TMessageIngredient } from "../../services/types";
-import { useSelector } from "../../services/types/hooks";
 import { formatDate } from "../../utils/utils";
+
+import { useSelector, useDispatch } from '../../services/types/hooks'
+import React from 'react'
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/wsAction'
+import { WS_CONNECTION_START_PROFILE_ORDERS, WS_CONNECTION_CLOSED_PROFILE_ORDERS } from "../../services/actions/wsProfileAction";
 
 export const OrderDetailsPage: FC<{ data: TMessageIngredient[] }> = ({ data }) => {
     const { id } = useParams();
     const ingredient = data.find((item: TMessageIngredient) => {
         return item._id === id
     })
-    console.log(ingredient);
+
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        dispatch({
+            type: WS_CONNECTION_START,
+            payload: '/all'
+        })
+        return () => {
+            dispatch({
+                type: WS_CONNECTION_CLOSED
+            });
+        };
+    }, [dispatch])
+
+    React.useEffect(() => {
+        dispatch({
+            type: WS_CONNECTION_START_PROFILE_ORDERS,
+            payload: `?token=${localStorage.getItem('accessToken')?.split(' ')[1]}`
+        })
+        return () => {
+            dispatch({
+                type: WS_CONNECTION_CLOSED_PROFILE_ORDERS
+            });
+        };
+    }, [dispatch]);
+
     const dataOfIngredients = useSelector((store) => store.data.data)
 
     const ingredients = ingredient?.ingredients.map((elem) => dataOfIngredients.filter(e => {

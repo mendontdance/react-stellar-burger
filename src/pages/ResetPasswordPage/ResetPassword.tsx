@@ -2,8 +2,7 @@ import styles from './resetpassword.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
 import { RESET_PASSWORD, resetPassword, REDIRECT_RESET_PASSWORD } from '../../services/actions/authAction';
-import React, { FC, RefObject } from 'react';
-import { RootState } from '../../services/reducers/rootReducer';
+import React, { ChangeEvent, FC, FormEvent, RefObject } from 'react';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 
 type TResetInfo = {
@@ -15,14 +14,14 @@ export const ResetPasswordPage: FC = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const resetInfo: TResetInfo = useSelector((store: RootState) => store.user.resetInfo)
+    const resetInfo: TResetInfo = useSelector((store) => store.user.resetInfo)
 
     const handleClickLogin = (): void => {
         let path = `/login`;
         navigate(path);
     }
 
-    const onChange = (e: any): void => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
         dispatch({
             type: RESET_PASSWORD,
             [e.target.type]: e.target.value
@@ -34,7 +33,7 @@ export const ResetPasswordPage: FC = () => {
         }
     }
 
-    const handleClickSubmit = (e: any): void => {
+    const handleClickSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         dispatch(resetPassword(resetInfo.password, resetInfo.text, handleClickLogin))
         dispatch({

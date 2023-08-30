@@ -29,7 +29,7 @@ export const OrderComponent: FC<{ data: TMessageIngredient }> = ({ data }) => {
         }
         if (index > 5) return;
         return (
-            <img src={elem.image_mobile} alt={elem.name} className={`${styles[`icon_${index + 1}`]} ${styles.icon}`} key={elem._id+Math.floor(Math.random() * 1000000)} />
+            <img src={elem.image_mobile} alt={elem.name} className={`${styles[`icon_${index + 1}`]} ${styles.icon}`} key={elem._id + Math.floor(Math.random() * 1000000)} />
         )
     })
 
@@ -57,24 +57,23 @@ export const OrderComponent: FC<{ data: TMessageIngredient }> = ({ data }) => {
         }
     }, [location])
 
-
     return (
-            <div className={styles.container}>
-                <div className={styles.header}>
-                    <h4 className={`${styles.number} text text_type_digits-default`}>{data.number}</h4>
-                    <p className={`${styles.date} text text_type_main-default text_color_inactive`}>{`${formatDate(data.createdAt)}`}</p>
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h4 className={`${styles.number} text text_type_digits-default`}>{data.number}</h4>
+                <p className={`${styles.date} text text_type_main-default text_color_inactive`}>{`${formatDate(data.createdAt)}`}</p>
+            </div>
+            <h3 className={`text text_type_main-medium ${styles.title}`}>{data.name}</h3>
+            {state && <p className={`${statusClassName} text text_type_main-default`}>{status}</p>}
+            <div className={styles.footer}>
+                <div className={styles.icons}>
+                    {listOfIngredients}
                 </div>
-                <h3 className={`text text_type_main-medium ${styles.title}`}>{data.name}</h3>
-                {state && <p className={`${statusClassName} text text_type_main-default`}>{status}</p>}
-                <div className={styles.footer}>
-                    <div className={styles.icons}>
-                        {listOfIngredients}
-                    </div>
-                    <div className={styles.price}>
-                        <p className={`text text_type_digits-default ${styles.price__number}`}>{totalPriceOfOrder}</p>
-                        <div className={styles['currency-image']}><CurrencyIcon type="primary" /></div>
-                    </div>
+                <div className={styles.price}>
+                    <p className={`text text_type_digits-default ${styles.price__number}`}>{totalPriceOfOrder}</p>
+                    <div className={styles['currency-image']}><CurrencyIcon type="primary" /></div>
                 </div>
             </div>
+        </div>
     )
 }

@@ -6,13 +6,13 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 type TProps = {
     onClose: () => void,
-    children: any
+    children: React.ReactNode
 }
 
 export const Modal: FC<TProps> = ({ onClose, children }) => {
 
     React.useEffect(() => {
-        const handleEscKey = (event: any): void => {
+        const handleEscKey = (event: KeyboardEvent): void => {
             if (event.key === 'Escape') {
                 onClose();
             }

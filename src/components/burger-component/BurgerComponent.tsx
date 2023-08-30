@@ -3,7 +3,6 @@ import styles from './burger-component.module.css'
 import { useDrag, useDrop } from 'react-dnd'
 import { COUNT_AMOUNT_OF_INGREDIENTS_DELETE, CHANGE_INGREDIENT_ORDER } from '../../services/actions/ingredientCounterAction'
 import { TIngredient } from '../../services/types'
-import { RootState } from '../../services/reducers/rootReducer'
 import { FC } from 'react'
 import { useDispatch, useSelector } from '../../services/types/hooks'
 

@@ -1,3 +1,4 @@
+import { AppDispatch } from "../types/hooks";
 import { TCustomResponse, TResponseBody, TUser } from "../types";
 export const GET_DATA_FROM_SERVER_SUCCESS: 'GET_DATA_FROM_SERVER_SUCCESS' = 'GET_DATA_FROM_SERVER_SUCCESS';
 export const GET_DATA_FROM_SERVER_FAILED: 'GET_DATA_FROM_SERVER_FAILED' = 'GET_DATA_FROM_SERVER_FAILED';
@@ -7,15 +8,16 @@ export const POST_EMAIL_TO_SERVER_SUCCESS: 'POST_EMAIL_TO_SERVER_SUCCESS' = 'POS
 export const POST_EMAIL_TO_SERVER_FAILED: 'POST_EMAIL_TO_SERVER_FAILED' = 'POST_EMAIL_TO_SERVER_FAILED';
 export const baseUrl = 'https://norma.nomoreparties.space/api';
 
-export function checkResponse(res: TCustomResponse): TResponseBody<TUser> {
+
+export function checkResponse(res: Response) {
     if (res.ok) {
         return res.json();
     }
-    return res.json().then((err: any): Promise<void> => Promise.reject(err));
+    return res.json().then((err: string): Promise<void> => Promise.reject(err));
 }
 
 export const fetchData = () => {
-    return function (dispatch: any): void {
+    return function (dispatch: AppDispatch): void {
         fetch(`${baseUrl}/ingredients`)
             .then(checkResponse)
             .then(res => {
@@ -33,8 +35,8 @@ export const fetchData = () => {
     }
 }
 
-export const postData = (data: any, callback: () => void) => {
-    return function (dispatch: any): void {
+export const postData = (data: string[], callback: () => void) => {
+    return function (dispatch: AppDispatch): void {
         fetch(`${baseUrl}/orders`, {
             method: 'POST',
             headers: { 
@@ -47,6 +49,7 @@ export const postData = (data: any, callback: () => void) => {
         })
             .then(checkResponse)
             .then(res => {
+                console.log(res);
                 dispatch({
                     type: POST_DATA_TO_SERVER_SUCCESS,
                     postData: res,

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import styles from './forgotpassword.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
 import { FORGOT_PASSWORD, REDIRECT_RESET_PASSWORD } from '../../services/actions/authAction';
 import { forgotPassword } from '../../services/actions/authAction';
-import { RootState } from '../../services/reducers/rootReducer';
 import { FC } from 'react';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 
@@ -12,7 +11,7 @@ export const ForgotPasswordPage: FC = () => {
 
     let navigate = useNavigate();
     const dispatch = useDispatch();
-    const email: string = useSelector((store: RootState) => store.user.email)
+    const email: string = useSelector((store) => store.user.email)
 
     const handleClickLogin = (): void => {
         let path = `/login`;
@@ -24,7 +23,7 @@ export const ForgotPasswordPage: FC = () => {
         navigate(path);
     }
 
-    const onChange = (e: any): void => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
         dispatch({
             type: FORGOT_PASSWORD,
             email: e.target.value
@@ -34,7 +33,7 @@ export const ForgotPasswordPage: FC = () => {
         }
     }
 
-    const onClick = (e: any): void => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         dispatch(forgotPassword(email, handleClickReset))
         dispatch({
@@ -48,7 +47,7 @@ export const ForgotPasswordPage: FC = () => {
 
     return (
         <main className={`ml-5 mr-5 ${styles.main}`}>
-            <form className={styles.container} onSubmit={onClick}>
+            <form className={styles.container} onSubmit={onSubmit}>
                 <h2 className={`text text_type_main-medium ${styles.title}`}>Восстановление пароля</h2>
                 <Input
                     type='email'
@@ -60,7 +59,7 @@ export const ForgotPasswordPage: FC = () => {
                 <Button extraClass={styles.button} htmlType="submit" type="primary" size="large">
                     Восстановить
                 </Button>
-                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickLogin}>Войти</span></p>
+                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span className={`${styles["register__login"]} text text_type_main-default`} onSubmit={handleClickLogin}>Войти</span></p>
             </form>
         </main>
     );

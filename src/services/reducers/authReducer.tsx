@@ -29,7 +29,11 @@ const initialState: TAuthInitialState = {
         email: '',
         password: '',
     },
-    user: { success: false },
+    user: {
+        email: '',
+        name: '',
+        password: ''
+    },
     isAuthChecked: false,
     password: 0,
     email: '',
@@ -40,7 +44,7 @@ const initialState: TAuthInitialState = {
     redirect: true
 };
 
-export const authReducer = (state = initialState, action: TAuthActions):TAuthInitialState => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthInitialState => {
     switch (action.type) {
         case REDIRECT_RESET_PASSWORD: {
             return {

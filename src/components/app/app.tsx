@@ -10,18 +10,17 @@ import { Modal } from '../modal/Modal';
 import { OPEN_INGREDIENT_MODAL_FAILED } from '../../services/actions/modalAction';
 import { AppHeader } from '../appheader/AppHeader';
 import styles from './app.module.css'
-import { RootState } from '../../services/reducers/rootReducer.js';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 
 export const App: FC = () => {
 
   const dispatch = useDispatch();
-  const success: boolean = useSelector((store: RootState) => store.data.success);
-  const data = useSelector((store: RootState) => store.data.data)
-  const orders = useSelector((store: RootState) => store.order.messages)
+  const success: boolean = useSelector((store) => store.data.success);
+  const data = useSelector((store) => store.data.data)
+  const orders = useSelector((store) => store.order.messages)
 
   React.useEffect(
-    (): void => {
+    () => {
       dispatch(fetchData());
     },
     [dispatch]
@@ -43,10 +42,11 @@ export const App: FC = () => {
   }
 
   const location = useLocation();
-  const background = location.state && location.state.background;
-  const feed = location.state && location.state.feed
+  const background:string = location.state && location.state.background;
+  const feed:string = location.state && location.state.feed;
+  const profile:string = location.state && location.state.profile
 
-  const redirect: boolean = useSelector((store: RootState) => store.user.redirect)
+  const redirect: boolean = useSelector((store) => store.user.redirect)
   const navigate = useNavigate()
 
   React.useEffect((): void => {
@@ -65,12 +65,18 @@ export const App: FC = () => {
     navigate(location.state.feed)
   }
 
+  const onCloseOrderProfileModal = () => {
+    closeModal(false)
+    navigate(location.state.profile)
+  }
+  const profileOrder = useSelector(store => store.profile)
+
   return (
     <>
       {success &&
         <DndProvider backend={HTML5Backend}>
           <AppHeader />
-          <Routes location={background || location}>
+          <Routes location={profile || feed || background || location}>
             <Route path="/" element={<HomePage />} />
             <Route path="ingredients/:id" element={
               <div className={styles.section}>
@@ -84,7 +90,12 @@ export const App: FC = () => {
             <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} />
             <Route path="/orders" element={<OnlyAuth component={<OrdersHistoryPage />} />} />
             <Route path="/feed" element={<OrdersChainPage />} />
-            <Route path="/feed/:id" element={<OrderDetailsPage data={orders[orders.length - 1].orders} />} />
+            <Route path="feed/:id" element={
+              <div className={styles.section}>
+                <OrderDetailsPage data={orders[orders.length - 1].orders} />
+              </div>
+            } />
+            <Route path="orders/:id" element={<OnlyAuth component={<OrderDetailsPage data={profileOrder.messages.orders} />} />} />
           </Routes>
           {background && (
             <Routes>
@@ -95,13 +106,28 @@ export const App: FC = () => {
               } />
             </Routes>)}
           {feed && (
-            <Routes>
-              <Route path="/feed/:id" element={
-                <Modal onClose={onCloseOrderModal}>
-                  <OrderDetailsPage data={orders[orders.length - 1].orders} />
-                </Modal>
-              } />
-            </Routes>
+            <>
+              <OrdersChainPage />
+              <Routes>
+                <Route path="feed/:id" element={
+                  <Modal onClose={onCloseOrderModal}>
+                    <OrderDetailsPage data={orders[orders.length - 1].orders} />
+                  </Modal>
+                } />
+              </Routes>
+            </>
+          )}
+          {profile && (
+            <>
+              <OrdersHistoryPage />
+              <Routes>
+                <Route path="orders/:id" element={
+                  <Modal onClose={onCloseOrderProfileModal}>
+                    <OrderDetailsPage data={profileOrder.messages.orders} />
+                  </Modal>
+                } />
+              </Routes>
+            </>
           )}
         </DndProvider>}
     </>

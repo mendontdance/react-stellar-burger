@@ -8,9 +8,9 @@ import { TIngredient } from '../types';
 
 export type TFetchInitialState = {
     data: TIngredient[],
-    postData?: {
-        name: string,
-        order: {
+    postData: {
+        name?: string,
+        order?: {
             number?: number
         },
         success: boolean
@@ -32,16 +32,13 @@ export type TGetDataFromServerFailed = {
 export type TPostDataToServerSuccess = {
     readonly type: typeof POST_DATA_TO_SERVER_SUCCESS;
     readonly postData: {
-        name: string,
-        order: {
-            number?: number
+        name?: string | undefined,
+        order?: {
+            number?: number | undefined
         },
         success: boolean
     }
     readonly postSuccess: boolean
-    readonly order: {
-        number: number
-    } 
 }
 export type TPostDataToServerFailed = {
     readonly type: typeof POST_DATA_TO_SERVER_FAILED;

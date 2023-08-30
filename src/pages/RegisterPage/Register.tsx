@@ -1,10 +1,9 @@
 import styles from './register.module.css';
-import React from 'react'
+import React, { ChangeEvent, FormEvent } from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
 import { registerUser, REGISTER_USER, INITIAL_STATE } from '../../services/actions/authAction';
 import { FC } from 'react';
-import { RootState } from '../../services/reducers/rootReducer';
 import { TRegisteredInfo } from '../../services/types';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 
@@ -12,9 +11,9 @@ export const RegisterPage: FC = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const userInfo:TRegisteredInfo = useSelector((store: RootState) => store.user.registeredUserInfo)
+    const userInfo:TRegisteredInfo = useSelector((store) => store.user.registeredUserInfo)
 
-    const onChange = (e: any): void => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
         dispatch({
             type: REGISTER_USER,
             [e.target.type]: e.target.value
@@ -33,7 +32,7 @@ export const RegisterPage: FC = () => {
         navigate(path);
     }
 
-    const handleClickSubmit = (e: any): void => {
+    const handleClickSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         dispatch(registerUser(userInfo, handleClickRegister, () => {
             dispatch({
@@ -48,7 +47,7 @@ export const RegisterPage: FC = () => {
 
     return (
         <main className={`ml-5 mr-5 ${styles.main}`}>
-            <form className={styles.container}>
+            <form className={styles.container} onSubmit={handleClickSubmit}>
                 <h2 className={`text text_type_main-medium ${styles.title}`}>Регистрация</h2>
                 <Input
                     type='text'
@@ -72,7 +71,7 @@ export const RegisterPage: FC = () => {
                     icon={"ShowIcon"}
                     value={valuePassword}
                 />
-                <Button extraClass={styles.button} htmlType="button" type="primary" size="large" onClick={handleClickSubmit}>
+                <Button extraClass={styles.button} htmlType="submit" type="primary" size="large">
                     Зарегистрироваться
                 </Button>
                 <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Уже зарегистрированы?<span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickRegister}>Войти</span></p>

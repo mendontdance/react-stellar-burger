@@ -3,6 +3,7 @@ import { WS_CONNECTION_SUCCESS, WS_CONNECTION_START, WS_CONNECTION_ERROR, WS_CON
 
 export type TWSConnectionStart = {
     readonly type: typeof WS_CONNECTION_START;
+    readonly payload: string
 }
 export type TWSConnectionSuccess = {
     readonly type: typeof WS_CONNECTION_SUCCESS;

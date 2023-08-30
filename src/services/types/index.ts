@@ -22,13 +22,18 @@ export type TCustomResponse = {
 
 export type TResponseBody<TDataType> = {
     readonly success: boolean;
-
     accessToken: string;
     refreshToken: string;
     user?: TDataType;
     message?: string;
     headers: Headers;
-    data?: any
+    data?: any;
+    name?: string,
+    order?: {
+        number?: number
+    },
+    email?: string
+    password?: string
 }
 
 export type TUser = {
@@ -84,10 +89,21 @@ export type TRegisteredInfo = {
     name: string,
 }
 
+export type TInfoUser = {
+    email?: string,
+    password?: string,
+    name?: string,
+} | undefined
+
 export type TLoginInfo = {
     email: string,
     password: string,
     name: string;
+}
+
+export type TCheckUserAuth = {
+    getUserData: () => Promise<void>
+    catch: () => void
 }
 
 export type TActions = TModalActions
@@ -97,12 +113,15 @@ export type TActions = TModalActions
     | TWSActions
     | TWSActionsProfileOrders
 
+type Tcatch = {
+    catch: () => void
+    }
+
 // Типизация всех экшенов приложения
 export type TApplicationActions = TActions;
 
-export type AppThunk<TReturn = void> = ActionCreator<
-    ThunkAction<TReturn, Action, RootState, TApplicationActions>
->;
+export type AppThunk<ReturnType = void> = ActionCreator<
+  ThunkAction<ReturnType, Action, RootState, TApplicationActions>>
 
 export type TMessageIngredient = {
     ingredients: string[],
@@ -119,4 +138,4 @@ export type TMessage = {
     orders: TMessageIngredient[],
     total: number,
     totalToday: number
-} 
+}

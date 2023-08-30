@@ -14,7 +14,7 @@ const initialState: TFetchInitialState = {
     postFailed: false,
     postSuccess: false,
     postData: {
-        name: '',
+        name: undefined,
         order: {
             number: undefined
         },
@@ -42,7 +42,7 @@ export const fetchReducer = (state = initialState, action: TFetchActions):TFetch
             return {
                 ...state,
                 postData: action.postData,
-                orderNumber: action.postData.order.number,
+                orderNumber: action.postData?.order?.number,
                 postSuccess: action.postSuccess
             }
         }

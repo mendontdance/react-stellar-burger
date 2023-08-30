@@ -3,6 +3,7 @@ import { WS_CONNECTION_SUCCESS_PROFILE_ORDERS, WS_CONNECTION_START_PROFILE_ORDER
 
 export type TWSConnectionStartProfileOrders = {
     readonly type: typeof WS_CONNECTION_START_PROFILE_ORDERS;
+    readonly payload: string
 }
 export type TWSConnectionSuccessProfileOrders = {
     readonly type: typeof WS_CONNECTION_SUCCESS_PROFILE_ORDERS;

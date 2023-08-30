@@ -1,12 +1,10 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, RouteProps, useLocation } from "react-router-dom";
 import React from "react";
 import { SET_USER_AUTH } from "../../services/actions/authAction";
 import { checkUserAuth } from "../../services/actions/authAction";
-import { RootState } from "../../services/reducers/rootReducer";
-import { TRawUser } from "../../services/types";
 import { useDispatch, useSelector } from "../../services/types/hooks";
 
-const Protected = ({ onlyUnAuth = false, component }: { onlyUnAuth: boolean, component: any }) => {
+const Protected = ({ onlyUnAuth = false, component }: { onlyUnAuth: boolean, component:JSX.Element}) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -17,8 +15,8 @@ const Protected = ({ onlyUnAuth = false, component }: { onlyUnAuth: boolean, com
     dispatch(checkUserAuth());
   }, [dispatch]);
 
-  const isAuthChecked: boolean = useSelector((store: RootState) => store.user.isAuthChecked);
-  const user: TRawUser = useSelector((store: RootState) => store.user.user);
+  const isAuthChecked: boolean = useSelector((store) => store.user.isAuthChecked);
+  const user = useSelector((store) => store.user.user);
   const location = useLocation();
 
   if (!isAuthChecked) {
@@ -27,9 +25,12 @@ const Protected = ({ onlyUnAuth = false, component }: { onlyUnAuth: boolean, com
 
   if (onlyUnAuth && user) {
     const { from } = location.state || { from: { pathname: "/" } };
+    if (location.state.from.pathname === '/orders') {
+      return <Navigate to={'/profile'}/>
+    }
     return <Navigate to={from} />;
   }
-
+  
   if (!onlyUnAuth && !user) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
@@ -37,5 +38,9 @@ const Protected = ({ onlyUnAuth = false, component }: { onlyUnAuth: boolean, com
   return component;
 };
 
-export const OnlyAuth = (props: any) => <Protected onlyUnAuth={false} {...props} />;
-export const OnlyUnAuth = (props: any) => <Protected onlyUnAuth={true} {...props} />;
+type T = {
+  component: JSX.Element
+}
+
+export const OnlyAuth = (props: T) => <Protected onlyUnAuth={false} {...props} />;
+export const OnlyUnAuth = (props: T) => <Protected onlyUnAuth={true} {...props} />;

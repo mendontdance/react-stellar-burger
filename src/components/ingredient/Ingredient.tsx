@@ -1,20 +1,20 @@
 import React, { FC } from 'react'
 import styles from "./ingredient.module.css"
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { OPEN_INGREDIENT_MODAL_SUCCESS } from '../../services/actions/modalAction';
 import { Link, useLocation } from 'react-router-dom';
-import { RootState } from '../../services/reducers/rootReducer';
 import { TIngredient } from '../../services/types';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 
 export const Ingredient: FC<{ id: string }> = ({ id }) => {
 
-    const ingredient: TIngredient = useSelector((store: RootState): any => {
-        return store.data.data.find((elem: TIngredient): boolean => {
+    const ingredient = useSelector((store): any=> {
+        return store.data.data.find((elem) => {
             return elem._id === id
         })
     })
+
     const location = useLocation();
 
     const [, dragRefFromBurgerIngredients] = useDrag<TIngredient, unknown, unknown>({
@@ -40,8 +40,8 @@ export const Ingredient: FC<{ id: string }> = ({ id }) => {
         }
     })
 
-    const dataOfChosenIngredients = useSelector((store: RootState) => store.counter.data)
-    const bun: TIngredient = useSelector((store: RootState) => store.counter.bun)
+    const dataOfChosenIngredients = useSelector((store) => store.counter.data)
+    const bun: TIngredient = useSelector((store) => store.counter.bun)
 
     const dispatch = useDispatch();
 

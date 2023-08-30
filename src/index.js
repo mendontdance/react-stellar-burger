@@ -61,3 +61,12 @@ reportWebVitals();
 // const filtered = arr.filter(({ id }, index) => !ids.includes(id, index + 1));
 
 // console.log(filtered);
+
+// const a = (id, name, surname) =>  {
+//   return {
+//     id, name, surname
+//   }
+// }
+
+// const qwer = a(111, 'danil', 'DK')
+// console.log(a());
