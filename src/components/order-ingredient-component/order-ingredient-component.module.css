@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    padding-right: 24px;
+    margin-top: 24px;
+    align-items: center;
+}
+
+.image {
+    box-sizing: border-box;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #801AB2;
+    margin-right: 16px;
+}
+
+.title {
+    flex: auto;
+    margin: 0;  
+}
+
+.price__content {
+    display: flex;
+    align-items:center;
+    gap: 5px;
+}
+
+.icon {
+
+}
