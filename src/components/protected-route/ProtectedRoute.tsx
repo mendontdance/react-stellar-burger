@@ -15,7 +15,7 @@ const Protected = ({ onlyUnAuth = false, component }: { onlyUnAuth: boolean, com
     dispatch(checkUserAuth());
   }, [dispatch]);
 
-  const isAuthChecked: boolean = useSelector((store) => store.user.isAuthChecked);
+  const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
   const user = useSelector((store) => store.user.user);
   const location = useLocation();
 

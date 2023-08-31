@@ -45,11 +45,7 @@ export const LoginPage: FC = () => {
 
     const handleClickSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        dispatch(loginUser(userInfo, handleClickAuth, () => {
-            dispatch({
-                type: INITIAL_STATE
-            })
-        }))
+        dispatch(loginUser(userInfo, handleClickAuth))
     }
 
     return (

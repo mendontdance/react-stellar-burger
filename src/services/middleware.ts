@@ -1,28 +1,28 @@
 // socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
 import type { Middleware, MiddlewareAPI } from 'redux';
 import { AppDispatch } from './types/hooks';
-import { TApplicationActions } from './types';
-import { ws_url } from './store';
+import { WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_ON_MESSAGE_RECEIVED, WS_SEND_MESSAGE } from './actions/wsAction';
+import { WS_CONNECTION_SUCCESS_PROFILE_ORDERS, WS_CONNECTION_START_PROFILE_ORDERS, WS_CONNECTION_CLOSED_PROFILE_ORDERS, WS_CONNECTION_ERROR_PROFILE_ORDERS, WS_ON_MESSAGE_RECEIVED_PROFILE_ORDERS } from './actions/wsProfileAction';
 
 type TwsActions = {
-    wsInit: 'WS_CONNECTION_START' | 'WS_CONNECTION_START_PROFILE_ORDERS',
-    wsSendMessage: 'WS_SEND_MESSAGE',
-    onOpen: 'WS_CONNECTION_SUCCESS' | 'WS_CONNECTION_SUCCESS_PROFILE_ORDERS',
-    onClose: 'WS_CONNECTION_CLOSED' | 'WS_CONNECTION_CLOSED_PROFILE_ORDERS',
-    onError: 'WS_CONNECTION_ERROR' | 'WS_CONNECTION_ERROR_PROFILE_ORDERS',
-    onMessage: 'WS_ON_MESSAGE_RECEIVED' | 'WS_ON_MESSAGE_RECEIVED_PROFILE_ORDERS'
-  };
+  wsInit: typeof WS_CONNECTION_START | typeof WS_CONNECTION_START_PROFILE_ORDERS,
+  wsSendMessage: typeof WS_SEND_MESSAGE,
+  onOpen: typeof WS_CONNECTION_SUCCESS | typeof WS_CONNECTION_SUCCESS_PROFILE_ORDERS,
+  onClose: typeof WS_CONNECTION_CLOSED | typeof WS_CONNECTION_CLOSED_PROFILE_ORDERS,
+  onError: typeof WS_CONNECTION_ERROR | typeof WS_CONNECTION_ERROR_PROFILE_ORDERS,
+  onMessage: typeof WS_ON_MESSAGE_RECEIVED | typeof WS_ON_MESSAGE_RECEIVED_PROFILE_ORDERS
+};
 
-export const socketMiddleware = (wsActions: TwsActions): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TwsActions): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch>) => {
     let socket: WebSocket | null = null;
 
     return next => (action) => {
       const { dispatch } = store;
-      const {wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
-      const {type, payload} = action
+      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+      const { type, payload } = action
       if (type === wsInit) {
-        socket = new WebSocket(`${ws_url}${payload}`);
+        socket = new WebSocket(`${wsUrl}${payload}`);
       }
 
       if (socket) {
