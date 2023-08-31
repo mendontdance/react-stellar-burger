@@ -1,0 +1,43 @@
+.ingredient {
+    width: 272px;
+    height: 208px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.ingredient-added {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    background-color: #4c4bfe;
+}
+
+.currency {
+    display: flex;
+}
+
+.price {
+    margin: 0;
+}
+
+.text {
+    text-align: center;
+    margin: 0;
+    min-height: 48px;
+}
+
+.link {
+    color: inherit;
+    text-decoration: inherit;
+}

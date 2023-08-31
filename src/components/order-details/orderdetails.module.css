@@ -1,0 +1,20 @@
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 720px;
+    max-height: 100vh;
+    position: relative;
+    border-radius: 40px;
+    background-color: #1d1c22;
+}
+
+.order {
+    margin: 0;
+    text-shadow: 0 0 0.3em #26277a, 0 0 0.3em #26277a;
+}
+
+.name {
+    margin: 0;
+    margin-top: 32px;
+}

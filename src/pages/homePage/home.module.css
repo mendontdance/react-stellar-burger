@@ -1,0 +1,11 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1220px) {
+  .main {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
