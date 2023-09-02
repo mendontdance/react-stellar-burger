@@ -8,7 +8,10 @@
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
     "clsx": "^1.2.1",
     "immutability-helper": "^3.1.1",
+<<<<<<< HEAD
     "jest-fetch-mock": "^3.0.3",
+=======
+>>>>>>> main
     "moment": "^2.29.4",
     "prop-types": "^15.8.1",
     "react": "^17.0.1",
@@ -33,9 +36,13 @@
     "@types/react-dom": "17.0.0",
     "cypress": "^13.0.0",
     "eslint-plugin-cypress": "^2.14.0",
+<<<<<<< HEAD
     "fetch-mock": "^9.11.0",
     "gh-pages": "^6.0.0",
     "redux-mock-store": "^1.5.4",
+=======
+    "gh-pages": "^6.0.0",
+>>>>>>> main
     "typescript": "^4.9.5"
   },
   "scripts": {
@@ -44,7 +51,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress:open": "./node_modules/.bin/cypress open",
+<<<<<<< HEAD
     "predeploy": "npm run build",
+=======
+>>>>>>> main
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {

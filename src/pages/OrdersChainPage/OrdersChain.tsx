@@ -7,7 +7,10 @@ import React from 'react'
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/wsAction'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
+<<<<<<< HEAD
 import { Payload } from '../../components/payload/Payload'
+=======
+>>>>>>> main
 
 export const OrdersChainPage: FC = () => {
 
@@ -42,6 +45,7 @@ export const OrdersChainPage: FC = () => {
         )
     })
 
+<<<<<<< HEAD
     React.useEffect(() => {
         if (listOfMessages[listOfMessages.length - 1]?.orders.length > 0) {
             setState(true)
@@ -64,5 +68,19 @@ export const OrdersChainPage: FC = () => {
                 </section>
             </main> : <Payload />}
         </>
+=======
+    return (
+        <main className={`mt-10 ml-5 mr-5 ${styles.main}`}>
+            <section className={styles.container}>
+                <h2 className={`text text_type_main-large mb-5 ${styles.title}`}>Лента заказов</h2>
+                <div className={styles.content}>
+                    <div className={styles.orders}>
+                        {listOfOrders}
+                    </div>
+                    <OrderBoard />
+                </div>
+            </section>
+        </main>
+>>>>>>> main
     )
 }

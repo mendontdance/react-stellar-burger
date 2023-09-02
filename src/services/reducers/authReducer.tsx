@@ -13,7 +13,11 @@ import {
 } from '../actions/authAction';
 import { TAuthActions, TAuthInitialState } from '../types/auth';
 
+<<<<<<< HEAD
 export const initialState: TAuthInitialState = {
+=======
+const initialState: TAuthInitialState = {
+>>>>>>> main
     registeredUserInfo: {
         email: '',
         password: '',

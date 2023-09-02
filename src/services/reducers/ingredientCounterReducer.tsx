@@ -61,12 +61,19 @@ export const ingredientCounterReducer = (state = initialState, action: TCounterA
             }
         }
         case CHANGE_INGREDIENT_ORDER: {
+<<<<<<< HEAD
             const newData = [...state.data]
             newData.splice(action.indexFrom, 1);
             newData.splice(action.indexTo, 0, action.ingredient);
             return {
                 ...state,
                 data: newData
+=======
+            state.data.splice(action.indexFrom, 1);
+            state.data.splice(action.indexTo, 0, action.ingredient);
+            return {
+                ...state,
+>>>>>>> main
             }
         }
         case INITIAL_STATE: {

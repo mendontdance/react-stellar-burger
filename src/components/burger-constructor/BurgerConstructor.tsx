@@ -49,7 +49,12 @@ export const BurgerConstructor: FC = () => {
     const bun: TIngredient = useSelector((store) => store.counter.bun)
     const dataOfChosenIngredients: TIngredient[] = useSelector((store) => store.counter.data)
     const sumOfIngredients: number = useSelector((store) => store.counter.sum)
+<<<<<<< HEAD
 
+=======
+    const counter = useSelector((store) => store.counter) // kek
+    console.log(counter);
+>>>>>>> main
     const totalPrice: number | "0" = bun.price * 2 + sumOfIngredients > 0 ? bun.price * 2 + sumOfIngredients : "0"
     const getOrderNumber: number | undefined = useSelector((store) => store.data.orderNumber)
     const isAuth = useSelector((store) => store.user.user)
@@ -75,7 +80,11 @@ export const BurgerConstructor: FC = () => {
     const allOrderIngredientsId = [bun._id, ...ingredientsId, bun._id];
 
     return (
+<<<<<<< HEAD
         <section className={`mt-25 ${styles['burger-constructor']}`} ref={dropRefFromBurgerIngredients} data-testid='dropIngredient'>
+=======
+        <section className={`mt-25 ${styles['burger-constructor']}`} ref={dropRefFromBurgerIngredients} >
+>>>>>>> main
             <div className={styles['burger-container']}>
                 {
                     bun.type === 'bun' ? <div className='ml-6 mr-2 mb-2'>
@@ -128,7 +137,11 @@ export const BurgerConstructor: FC = () => {
                         <CurrencyIcon type="primary" />
                     </div>
                 </div>
+<<<<<<< HEAD
                 <Button htmlType="button" type="primary" size="large" onClick={handleClickOrder} data-testid="buttonOrder">
+=======
+                <Button htmlType="button" type="primary" size="large" onClick={handleClickOrder}>
+>>>>>>> main
                     Оформить заказ
                 </Button>
                 {showModal && <Modal onClose={() => setShowModal(false)}>

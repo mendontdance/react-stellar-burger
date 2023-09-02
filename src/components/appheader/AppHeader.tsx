@@ -2,7 +2,10 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 import styles from './appheader.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { FC } from 'react'
+<<<<<<< HEAD
 import { Payload } from '../payload/Payload'
+=======
+>>>>>>> main
 
 export const AppHeader: FC = () => {
 
@@ -13,7 +16,11 @@ export const AppHeader: FC = () => {
     }
 
     return (
+<<<<<<< HEAD
         <header className={styles.header} data-testid='header-test'>
+=======
+        <header className={styles.header}>
+>>>>>>> main
             <div className={styles.links}>
                 <Link to="/" className={`pt-4 pr-5 pb-4 pl-5 mr-2 ${styles.link} ${styles['personal-account']}`}>
                     <BurgerIcon type="primary" />

@@ -34,8 +34,13 @@ const initStore = (initialState = {}) =>
     composeWithDevTools(
       applyMiddleware(
         thunkMiddleware,
+<<<<<<< HEAD
         socketMiddleware(ws_url, wsActions),
         socketMiddleware(ws_url, wsActionsProfile)
+=======
+        socketMiddleware(wsActions),
+        socketMiddleware(wsActionsProfile)
+>>>>>>> main
       ),
     )
   );
