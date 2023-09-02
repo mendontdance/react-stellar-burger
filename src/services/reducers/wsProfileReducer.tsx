@@ -12,22 +12,14 @@ type TWSInitialStateProfile = {
     messages: TMessage,
 }
 
-<<<<<<< HEAD
 export const initialState: TWSInitialStateProfile = {
-=======
-const initialState1: TWSInitialStateProfile = {
->>>>>>> main
     wsConnected: false,
     messages: 
         { success: false, orders: [], total: 0, totalToday: 0 }
     ,
 };
 
-<<<<<<< HEAD
 export const wsReducerProfile = (state = initialState, action: TWSActionsProfileOrders) => {
-=======
-export const wsReducerProfile = (state = initialState1, action: TWSActionsProfileOrders) => {
->>>>>>> main
     switch (action.type) {
         case WS_CONNECTION_SUCCESS_PROFILE_ORDERS:
             return {

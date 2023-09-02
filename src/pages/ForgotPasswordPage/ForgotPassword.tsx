@@ -59,11 +59,7 @@ export const ForgotPasswordPage: FC = () => {
                 <Button extraClass={styles.button} htmlType="submit" type="primary" size="large">
                     Восстановить
                 </Button>
-<<<<<<< HEAD
                 <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span className={`${styles["register__login"]} text text_type_main-default`} onClick={handleClickLogin}>Войти</span></p>
-=======
-                <p className={`${styles.register} text text_type_main-default text_color_inactive`}>Вспомнили пароль?<span className={`${styles["register__login"]} text text_type_main-default`} onSubmit={handleClickLogin}>Войти</span></p>
->>>>>>> main
             </form>
         </main>
     );

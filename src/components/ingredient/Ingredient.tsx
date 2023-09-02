@@ -62,11 +62,7 @@ export const Ingredient: FC<{ id: string }> = ({ id }) => {
         >
             <div className={`mt-8 ${styles.ingredient}`} onClick={() => {
                 openModal()
-<<<<<<< HEAD
             }} ref={dragRefFromBurgerIngredients} data-testid='dragIngredient'>
-=======
-            }} ref={dragRefFromBurgerIngredients}>
->>>>>>> main
                 {state && <div className={`text text_type_digits-default ${styles['ingredient-added']}`}>
                     {
                         [...dataOfChosenIngredients, bun].filter((v) => (ingredient?.name === v.name ? v.name : null)).length

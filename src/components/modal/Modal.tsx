@@ -29,17 +29,10 @@ export const Modal: FC<TProps> = ({ onClose, children }) => {
         ReactDOM.createPortal(
             <section className={styles.section}>
                 <div className={`${styles.modal}`}>
-<<<<<<< HEAD
                     <div className={styles['button__close']} onClick={() => {
                             onClose();
                         }} data-testid="buttonClose">
                         <CloseIcon type="primary" />
-=======
-                    <div className={styles['button__close']}>
-                        <CloseIcon type="primary" onClick={() => {
-                            onClose();
-                        }} />
->>>>>>> main
                     </div>
                     <div className={styles.content}>
                         {children}
