@@ -13,7 +13,7 @@ type TWSInitialState = {
     messages: TMessage[],
 }
 
-const initialState: TWSInitialState = {
+export const initialState: TWSInitialState = {
     wsConnected: false,
     messages: [
         { success: false, orders: [], total: 0, totalToday: 0 }
@@ -43,11 +43,6 @@ export const wsReducer = (state = initialState, action: TWSActions) => {
             return {
                 ...state,
                 messages: [action.payload]
-            }
-        case WS_ON_MESSAGE_RECEIVED_PROFILE:
-            return {
-                ...state,
-                profile: action.payload
             }
         default:
             return state;

@@ -60,6 +60,7 @@ export const BurgerComponent: FC<TProps> = ({ data, index }) => {
         <div
             className={styles.container}
             ref={(node) => dropRefInsideConstructor(dragRefInsideConstructor(node))}
+            data-testid='burger-component-test'
         >
             <DragIcon type="primary" />
             <ConstructorElement

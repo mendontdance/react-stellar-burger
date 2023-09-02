@@ -43,7 +43,6 @@ export const registerUser = (
 export const loginUser = (
     userInfo: TUserInfo,
     callback: () => void,
-    backToInitialState: () => void
 ) => {
     return function (dispatch: AppDispatch): Promise<void> {
         return fetch(`${baseUrl}/auth/login`, {
@@ -66,7 +65,6 @@ export const loginUser = (
                 })
             })
             .then(callback)
-            .then(backToInitialState)
             .catch(err => {
                 console.log(err);
             })
@@ -206,8 +204,8 @@ export const resetPassword = (password: string, token: string, callback: () => v
     }
 }
 
-export const logout = () => {
-    return (dispatch: AppDispatch): Promise<void> => {
+export const logout:AppThunk   = () => {
+    return (dispatch)=> {
         return fetch(`${baseUrl}/auth/logout`, {
             method: "POST",
             headers: {

@@ -7,7 +7,7 @@ import {
 import { TFetchInitialState, TFetchActions } from '../types/fetch';
 
 
-const initialState: TFetchInitialState = {
+export const initialState: TFetchInitialState = {
     dataFailed: false,
     data: [],
     success: false,
