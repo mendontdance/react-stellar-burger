@@ -2,6 +2,7 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 import styles from './appheader.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { FC } from 'react'
+import { Payload } from '../payload/Payload'
 
 export const AppHeader: FC = () => {
 

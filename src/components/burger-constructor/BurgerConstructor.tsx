@@ -49,8 +49,7 @@ export const BurgerConstructor: FC = () => {
     const bun: TIngredient = useSelector((store) => store.counter.bun)
     const dataOfChosenIngredients: TIngredient[] = useSelector((store) => store.counter.data)
     const sumOfIngredients: number = useSelector((store) => store.counter.sum)
-    const counter = useSelector((store) => store.counter) // kek
-    console.log(counter);
+
     const totalPrice: number | "0" = bun.price * 2 + sumOfIngredients > 0 ? bun.price * 2 + sumOfIngredients : "0"
     const getOrderNumber: number | undefined = useSelector((store) => store.data.orderNumber)
     const isAuth = useSelector((store) => store.user.user)

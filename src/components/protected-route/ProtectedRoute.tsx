@@ -3,6 +3,7 @@ import React from "react";
 import { SET_USER_AUTH } from "../../services/actions/authAction";
 import { checkUserAuth } from "../../services/actions/authAction";
 import { useDispatch, useSelector } from "../../services/types/hooks";
+import { Payload } from "../payload/Payload";
 
 const Protected = ({ onlyUnAuth = false, component }: { onlyUnAuth: boolean, component: JSX.Element }) => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Protected = ({ onlyUnAuth = false, component }: { onlyUnAuth: boolean, com
   const location = useLocation();
 
   if (!isAuthChecked) {
-    return null;
+    return <Payload />;
   }
 
   if (onlyUnAuth && user) {
