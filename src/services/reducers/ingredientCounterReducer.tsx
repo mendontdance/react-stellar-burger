@@ -32,6 +32,7 @@ export const initialState: TCounterInitialState = {
 };
 
 export const ingredientCounterReducer = (state = initialState, action: TCounterActions): TCounterInitialState => {
+    console.log(action);
     switch (action.type) {
         case COUNT_AMOUNT_OF_INGREDIENTS_ADD: {
             return {
