@@ -53,7 +53,7 @@ export const OrdersHistoryPage: FC = () => {
     }).reverse() : null
 
     React.useEffect(() => {
-        if (listOfMessagesProfile.messages.orders.length > 0) {
+        if (listOfMessagesProfile) {
             setState(true)
         }
     }, [listOfMessagesProfile])
@@ -63,21 +63,22 @@ export const OrdersHistoryPage: FC = () => {
     return (
         <main>
             {
-                state ? <>
-                    <section className={styles.container}>
-                        <menu className={styles.menu}>
-                            <ul className={styles.menu_list}>
-                                <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={handleClickProfile}>Профиль</li>
-                                <li className={`${styles.li} text text_type_main-medium`} onClick={handleClickOrders}>История заказов</li>
-                                <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={logOut}>Выход</li>
-                            </ul>
-                            <p className={`${styles.text} text text_type_main-small`}>В этом разделе вы можете просмотреть свою историю заказов</p>
-                        </menu>
-                        <div className={styles.orders}>
-                            {listOfOrders}
-                        </div>
-                    </section>
-                </>
+                state ?
+                    <>
+                        <section className={styles.container}>
+                            <menu className={styles.menu}>
+                                <ul className={styles.menu_list}>
+                                    <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={handleClickProfile}>Профиль</li>
+                                    <li className={`${styles.li} text text_type_main-medium`} onClick={handleClickOrders}>История заказов</li>
+                                    <li className={`${styles.li} text text_type_main-medium text_color_inactive`} onClick={logOut}>Выход</li>
+                                </ul>
+                                <p className={`${styles.text} text text_type_main-small`}>В этом разделе вы можете просмотреть свою историю заказов</p>
+                            </menu>
+                            <div className={styles.orders}>
+                                {listOfOrders}
+                            </div>
+                        </section>
+                    </>
                     : <Payload />
             }
         </main>
