@@ -3,13 +3,13 @@ import styles from "./ingredient.module.css"
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrag } from 'react-dnd';
 import { OPEN_INGREDIENT_MODAL_SUCCESS } from '../../services/actions/modalAction';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { TIngredient } from '../../services/types';
 import { useSelector, useDispatch } from '../../services/types/hooks';
 
 export const Ingredient: FC<{ id: string }> = ({ id }) => {
 
-    const ingredient = useSelector((store): any=> {
+    const ingredient = useSelector((store): any => {
         return store.data.data.find((elem) => {
             return elem._id === id
         })
@@ -53,29 +53,37 @@ export const Ingredient: FC<{ id: string }> = ({ id }) => {
         })
     }
 
+    const navigate = useNavigate()
+
+    function clickHandler(e: React.MouseEvent<HTMLElement>) {
+        e.preventDefault()
+    }
+
     return (
-        <Link
-            to={`/ingredients/${ingredient?._id}`}
-            className={styles.link}
-            key={ingredient?._id}
-            state={{ background: location }}
-        >
-            <div className={`mt-8 ${styles.ingredient}`} onClick={() => {
-                openModal()
-            }} ref={dragRefFromBurgerIngredients} data-testid='dragIngredient'>
-                {state && <div className={`text text_type_digits-default ${styles['ingredient-added']}`}>
-                    {
-                        [...dataOfChosenIngredients, bun].filter((v) => (ingredient?.name === v.name ? v.name : null)).length
-                    }
-                </div>}
-                <img src={ingredient?.image} alt="Картинка ингредиента" className='image' />
-                <div className={styles.currency}>
-                    <p className={`pr-2 text text_type_digits-default ${styles.price}`}>{ingredient?.price}</p>
-                    <CurrencyIcon type="primary" />
+        <span ref={dragRefFromBurgerIngredients}>
+            <Link
+                to={`/ingredients/${ingredient?._id}`}
+                className={styles.link}
+                key={ingredient?._id}
+                state={{ background: location }}
+            >
+                <div className={`mt-8 ${styles.ingredient}`} onClick={() => {
+                    openModal()
+                }}  data-testid='dragIngredient'>
+                    {state && <div className={`text text_type_digits-default ${styles['ingredient-added']}`}>
+                        {
+                            [...dataOfChosenIngredients, bun].filter((v) => (ingredient?.name === v.name ? v.name : null)).length
+                        }
+                    </div>}
+                    <img src={ingredient?.image} alt="Картинка ингредиента" className='image' />
+                    <div className={styles.currency}>
+                        <p className={`pr-2 text text_type_digits-default ${styles.price}`}>{ingredient?.price}</p>
+                        <CurrencyIcon type="primary" />
+                    </div>
+                    <p className={`text text_type_main-default ${styles.text}`}>{ingredient?.name}</p>
                 </div>
-                <p className={`text text_type_main-default ${styles.text}`}>{ingredient?.name}</p>
-            </div>
-        </Link>
+            </Link>
+        </span>
     )
 }
 

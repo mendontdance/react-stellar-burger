@@ -4,7 +4,7 @@ import { BurgerComponent } from '../burger-component/BurgerComponent';
 import { Modal } from '../modal/Modal';
 import React, { FC } from 'react'
 import { OrderDetails } from '../order-details/OrderDetails';
-import { useDrop } from 'react-dnd';
+import { useDragLayer, useDrop } from 'react-dnd';
 import { COUNT_AMOUNT_OF_INGREDIENTS_ADD, INITIAL_STATE, SET_BUN } from '../../services/actions/ingredientCounterAction'
 import { postData } from '../../services/actions/fetchAction';
 import { useNavigate } from 'react-router-dom';
