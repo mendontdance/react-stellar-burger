@@ -12,8 +12,8 @@ export const LoginPage: FC = () => {
     const [valueEmail, setValueEmail] = React.useState<string>('')
 
     const navigate = useNavigate();
-    const userInfo:TLoginInfo = useSelector((store) => store.user.userLoginInfo)
-    
+    const userInfo: TLoginInfo = useSelector((store) => store.user.userLoginInfo)
+
     const handleClickRegister = (): void => {
         let path = `/register`;
         navigate(path);
@@ -48,6 +48,16 @@ export const LoginPage: FC = () => {
         dispatch(loginUser(userInfo, handleClickAuth))
     }
 
+    const onClickShow = (e: any) => {
+        setState(false)
+    }
+
+    const onClickHide = (e: any) => {
+        setState(true)
+    }
+
+    const [state, setState] = React.useState<boolean>(true)
+
     return (
         <main className={`ml-5 mr-5 ${styles.main}`}>
             <form className={styles.container} onSubmit={handleClickSubmit}>
@@ -59,14 +69,23 @@ export const LoginPage: FC = () => {
                     onChange={onChange}
                     value={valueEmail}
                 />
-                <Input
+                {state ? <Input
                     type='password'
                     placeholder={'Пароль'}
                     extraClass={styles.input}
                     onChange={onChange}
                     icon={"ShowIcon"}
                     value={valueName}
-                />
+                    onIconClick={onClickShow}
+                /> : <Input
+                    type='text'
+                    placeholder={'Пароль'}
+                    extraClass={styles.input}
+                    onChange={onChange}
+                    icon={"HideIcon"}
+                    value={valueName}
+                    onIconClick={onClickHide}
+                />}
                 <Button extraClass={styles.button} htmlType="submit" type="primary" size="large">
                     Войти
                 </Button>
