@@ -143,7 +143,7 @@ export const ProfilePage: FC = () => {
                             icon={"EditIcon"}
                             errorText={'Ошибка'}
                             ref={inputRefPassword}
-                            value={user?.password || ""}
+                            value={user?.password || "*****"}
                             disabled={isDisabled.password}
                             onIconClick={onIconClickPassword}
                             onChange={onChange}
