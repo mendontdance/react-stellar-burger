@@ -88,7 +88,7 @@ export const BurgerConstructor: FC = () => {
                         />
                     </div> :
                         <div className='ml-10 mr-2 mb-2 mt-10 text text_type_digits-default'>
-                            Выберите тип булки, который вы бы хотели
+                            Выберите тип булки, который вы бы хотели и тащите сюда
                         </div>
                 }
                 {
@@ -105,7 +105,7 @@ export const BurgerConstructor: FC = () => {
                             isOver && <div>Тащите сюда ингредиенты или поменяйте булку</div>
                         }
                     </div> :
-                        <div className={`mt-10 ml-10 text text_type_digits-default`}>После выбора булки выберите желаемые ингредиенты</div>
+                        <div className={`mt-10 ml-10 text text_type_digits-default`}>После выбора булки выберите желаемые ингредиенты, перетаскивая их сюда</div>
                 }
                 {
                     bun.type === 'bun' && <div className='ml-6 mr-2 mb-2'>

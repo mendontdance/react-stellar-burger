@@ -3,8 +3,8 @@ import { Ingredient } from '../ingredient/Ingredient'
 import styles from './ingredientlist.module.css'
 import { useSelector } from '../../services/types/hooks';
 
-export const IngredientList: FC<{ type: string, ref: Ref<HTMLDivElement> }> = React.forwardRef(
-    ({ type }, ref) => {
+export const IngredientList: FC<{ type: string }> = React.forwardRef(
+    ({ type }) => {
 
         const data = useSelector((store) => store.data.data)
         const typeOfIgredient = type === 'bun' ? "Булки" : type === "sauce" ? "Соусы" : type === "main" ? "Начинки" : null;
@@ -19,7 +19,7 @@ export const IngredientList: FC<{ type: string, ref: Ref<HTMLDivElement> }> = Re
 
         return (
             <div className={`${styles.ingredient__type} mt-10`} key={typeOfIgredient}>
-                <h3 id={type} className={`text text_type_main-medium ${styles.title}`} ref={ref}>{typeOfIgredient}</h3>
+                <h3 id={type} className={`text text_type_main-medium ${styles.title}`} >{typeOfIgredient}</h3>
                 <div className={styles.type}>
                     {listOfIgredients}
                 </div>

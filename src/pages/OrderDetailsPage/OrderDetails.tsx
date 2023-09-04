@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from '../../services/types/hooks'
 import React from 'react'
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/wsAction'
 import { WS_CONNECTION_START_PROFILE_ORDERS, WS_CONNECTION_CLOSED_PROFILE_ORDERS } from "../../services/actions/wsProfileAction";
+import { Payload } from "../../components/payload/Payload";
 
 export const OrderDetailsPage: FC<{ data: TMessageIngredient[] }> = ({ data }) => {
     const { id } = useParams();
@@ -66,6 +67,14 @@ export const OrderDetailsPage: FC<{ data: TMessageIngredient[] }> = ({ data }) =
         return <OrderIngredientComponent elem={elem} key={elem._id} />
     })
 
+    React.useEffect(() => {
+        if (ingredient) {
+            setState(true)
+        }
+    }, [ingredient])
+
+    const [state, setState] = React.useState<boolean>(false);
+
     const totalPrice = ingredients?.reduce((accum, elem) => {
         return accum += elem.price
     }, 0)
@@ -75,23 +84,27 @@ export const OrderDetailsPage: FC<{ data: TMessageIngredient[] }> = ({ data }) =
     const statusClassName = ingredient?.status === 'done' ? styles['status_done'] : ingredient?.status === 'created' ? styles['status_created'] : ingredient?.status === 'pending' ? styles.status_pending : styles.status_cancelled
 
     return (
-            <section className={styles.container}>
-                <h4 className={`${styles.number} text text_type_digits-default`}>{`#${ingredient?.number}`}</h4>
-                <h3 className={`text text_type_main-medium ${styles.title}`}>{ingredient?.name}</h3>
-                <p className={`text text_type_main-default ${statusClassName}`}>{status}</p>
-                <p className={`text text_type_main-medium ${styles.subtitle}`}>Состав:</p>
-                <div className={styles.content}>
-                    {list}
-                </div>
-                <div className={styles.footer}>
-                    <p className={`${styles.date} text text_type_main-default text_color_inactive`}>{formatDate(ingredient?.createdAt)}</p>
-                    <div className={styles.price}>
-                        <p className={`text text_type_digits-default ${styles.price__number}`}>{totalPrice}</p>
-                        <div className={styles['currency-image']}><CurrencyIcon type="primary" /></div>
+        <>
+            {
+                state ?
+                <section className={styles.container}>
+                    <h4 className={`${styles.number} text text_type_digits-default`}>{`#${ingredient?.number}`}</h4>
+                    <h3 className={`text text_type_main-medium ${styles.title}`}>{ingredient?.name}</h3>
+                    <p className={`text text_type_main-default ${statusClassName}`}>{status}</p>
+                    <p className={`text text_type_main-medium ${styles.subtitle}`}>Состав:</p>
+                    <div className={styles.content}>
+                        {list}
                     </div>
-                </div>
-            </section>
-
+                    <div className={styles.footer}>
+                        <p className={`${styles.date} text text_type_main-default text_color_inactive`}>{formatDate(ingredient?.createdAt)}</p>
+                        <div className={styles.price}>
+                            <p className={`text text_type_digits-default ${styles.price__number}`}>{totalPrice}</p>
+                            <div className={styles['currency-image']}><CurrencyIcon type="primary" /></div>
+                        </div>
+                    </div>
+                </section> : <Payload />
+            }
+        </>
     )
 }
 
